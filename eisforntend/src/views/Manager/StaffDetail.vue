@@ -120,7 +120,7 @@ export default {
   mounted() {
     var namaStaff = this.$route.query.name;
     console.log(this.$route.query.name);
-    var url = "http://mciexport.herokuapp.com/api/getStaff?name=" + namaStaff;
+    var url = "http://localhost:8099/api/getStaff?name=" + namaStaff;
     console.log(url);
     Axios.get(url)
       .then(response => {
@@ -136,8 +136,7 @@ export default {
     activeDeactivate(staff) {
       console.log("tombol aktivasi/deaktivasi ditekan");
       Axios.post(
-        "http://mciexport.herokuapp.com/api/changeStaffStatus?staffId=" +
-          staff.staffId,
+        "http://localhost:8099/api/changeStaffStatus?staffId=" + staff.staffId,
         {}
       )
         .then(function(response) {

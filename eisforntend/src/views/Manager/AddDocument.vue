@@ -87,7 +87,7 @@ export default {
       console.log(fd);
       Axios({
         method: "post",
-        url: "http://mciexport.herokuapp.com/api/upload",
+        url: "http://localhost:8099/api/upload",
         data: fd,
         headers: {
           "content-type": "multipart/form-data"

@@ -120,7 +120,7 @@ export default {
 
   mounted() {
     // this.$validator.localize("en", this.dictionary);
-    Axios.get("http://mciexport.herokuapp.com/api/getAllSI")
+    Axios.get("http://localhost:8099/api/getAllSI")
       .then(response => {
         const result = response.data.result;
         const listNormalSI = result.filter(
@@ -140,7 +140,7 @@ export default {
 
       console.log(ids);
       Axios.post(
-        "http://mciexport.herokuapp.com/api/si/set-priority?ids=" + ids,
+        "http://localhost:8099/api/si/set-priority?ids=" + ids,
         {}
       ).then(response => {
         console.log(response);

@@ -360,13 +360,13 @@ export default {
   },
   mounted() {
     var idSI = this.$route.query.id;
-    Axios.get("http://mciexport.herokuapp.com/api/si/?id=" + idSI)
+    Axios.get("http://localhost:8099/api/si/?id=" + idSI)
       .then(response => {
         this.konten = response.data.result;
       })
       .then(console.log(this.response))
       .catch(function error(params) {});
-    Axios.get("http://mciexport.herokuapp.com/api/get/document?id=" + idSI)
+    Axios.get("http://localhost:8099/api/get/document?id=" + idSI)
       .then(response => {
         this.document = response.data.result;
       })

@@ -37,7 +37,7 @@ export default {
     }
   }),
   mounted() {
-    Axios.get("http://mciexport.herokuapp.com/api/note?id=" + this.docId)
+    Axios.get("http://localhost:8099/api/note?id=" + this.docId)
       .then(response => {
         this.notes = response.data.result;
       })
@@ -55,7 +55,7 @@ export default {
       this.editedNotes.createdTime = time;
       this.notes.push(this.editedNotes);
       console.log(this.notes);
-      Axios.post("http://mciexport.herokuapp.com/api/add/note", {
+      Axios.post("http://localhost:8099/api/add/note", {
         documentId: this.docId,
         doc: this.notes
       });
@@ -71,7 +71,7 @@ export default {
     }
   }),
   mounted() {
-    Axios.get("http://mciexport.herokuapp.com/api/note?id=" + this.docId)
+    Axios.get("http://localhost:8099/api/note?id=" + this.docId)
       .then(response => {
         this.notes = response.data.result;
       })
@@ -89,7 +89,7 @@ export default {
       this.editedNotes.createdTime = time;
       this.notes.push(this.editedNotes);
       console.log(this.notes);
-      Axios.post("http://mciexport.herokuapp.com/api/add/note", {
+      Axios.post("http://localhost:8099/api/add/note", {
         documentId: this.docId,
         doc: this.notes
       });

@@ -118,7 +118,7 @@ export default {
 
   mounted() {
     // this.$validator.localize("en", this.dictionary);
-    Axios.get("http://mciexport.herokuapp.com/api/getAllSI")
+    Axios.get("http://localhost:8099/api/getAllSI")
       .then(response => {
         const result = response.data.result;
         const listNormalSI = result.filter(

@@ -57,7 +57,7 @@ export default {
   }),
   mounted() {
     var self = this;
-    Axios.get("http://mciexport.herokuapp.com/api/pi/all")
+    Axios.get("http://localhost:8099/api/pi/all")
       .then(response => {
         this.konten = response.data.result;
         console.log(this.$session.get.role);

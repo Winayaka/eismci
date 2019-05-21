@@ -252,7 +252,7 @@ export default {
 
       if (isOk) {
         var self = this;
-        Axios.post("http://mciexport.herokuapp.com/api/addStaff", {
+        Axios.post("http://localhost:8099/api/addStaff", {
           name: staff.name,
           email: staff.email,
           phoneNum: staff.phoneNum,

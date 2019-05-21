@@ -339,7 +339,7 @@ export default {
     var id = this.$session.get("id_role");
     this.idstaff = id;
     var idSi = this.$route.query.id;
-    Axios.get("http://mciexport.herokuapp.com/api/si?id=" + idSi)
+    Axios.get("http://localhost:8099/api/si?id=" + idSi)
       .then(response => {
         this.konten = response.data.result;
         this.oldSI = response.data.result;
@@ -347,12 +347,12 @@ export default {
       })
       .then(console.log(this.response))
       .catch(function error(params) {});
-    Axios.get("http://mciexport.herokuapp.com/api/getAllStaff")
+    Axios.get("http://localhost:8099/api/getAllStaff")
       .then(response => {
         this.staff = response.data.result;
       })
       .catch(function error(params) {});
-    Axios.get("http://mciexport.herokuapp.com/api/getAllPIPOTrans")
+    Axios.get("http://localhost:8099/api/getAllPIPOTrans")
       .then(response => {
         this.pipotrans = response.data.result;
       })
@@ -423,7 +423,7 @@ export default {
     },
     reInitialize() {
       alert("reInitialize");
-      Axios.get("http://mciexport.herokuapp.com/api/getAllPIPOTrans")
+      Axios.get("http://localhost:8099/api/getAllPIPOTrans")
         .then(response => {
           this.pipotrans = response.data.result;
         })
@@ -432,8 +432,7 @@ export default {
     submitSI(SI) {
       var idSi = this.$route.query.id;
       console.log(SI.invoice);
-      var url =
-        "http://mciexport.herokuapp.com/api/si/update?id=" + SI.shipmentId;
+      var url = "http://localhost:8099/api/si/update?id=" + SI.shipmentId;
       console.log(url);
       console.log(SI);
       Axios.post(url, {

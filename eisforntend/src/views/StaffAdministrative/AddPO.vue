@@ -373,7 +373,7 @@ export default {
   },
   mounted() {
     // this.$validator.localize("en", this.dictionary);
-    Axios.get("http://mciexport.herokuapp.com/api/getAllPurchaseOrder")
+    Axios.get("http://localhost:8099/api/getAllPurchaseOrder")
       .then(response => {
         var purchaseOrders = response.data.result;
         var purchaseOrdersNumber = [];
@@ -383,12 +383,12 @@ export default {
         this.purchaseOrdersNumber = purchaseOrdersNumber;
       })
       .then(console.log(this.response));
-    Axios.get("http://mciexport.herokuapp.com/api/getAllContainer")
+    Axios.get("http://localhost:8099/api/getAllContainer")
       .then(response => {
         this.container = response.data.result;
       })
       .then(console.log(this.response));
-    Axios.get("http://mciexport.herokuapp.com/api/getAllProduct")
+    Axios.get("http://localhost:8099/api/getAllProduct")
       .then(response => {
         this.products = response.data.result;
       })
@@ -401,7 +401,7 @@ export default {
       console.log(POForm);
       console.log(product);
       console.log(product.productName);
-      Axios.post("http://mciexport.herokuapp.com/api/po/add", {
+      Axios.post("http://localhost:8099/api/po/add", {
         number: POForm.number,
         shipment: POForm.shipment,
         date: POForm.date,

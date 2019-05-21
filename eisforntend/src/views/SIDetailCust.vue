@@ -1,174 +1,154 @@
 <template>
-  <v-container
-    fill-height
-    fluid
-    grid-list-xl
-  >
-    <v-layout
-      justify-center wrap
-    >
-      <v-flex
-        md12
-      >
-        <material-card
-          color="green"
-          title="Shipping Instruction Details"
-        >
-            
-            <v-layout>
-              <v-flex xs12 md6>
-                <tr>
-                  <td>
-                    <b>
-                      <p>Expected Time Departure</p>
-                    </b>
-                  </td>
-                  <td>: {{ konten.etd }}</td>
-                </tr>
-              </v-flex>
-              <v-flex xs12 md6>
-                <tr>
-                  <td>
-                    <b>
-                      <p>Expexted Time Arrival</p>
-                    </b>
-                  </td>
-                  <td>: {{ konten.eta }}</td>
-                </tr>
-              </v-flex>
-            </v-layout>
+  <v-container fill-height fluid grid-list-xl>
+    <v-layout justify-center wrap>
+      <v-flex md12>
+        <material-card color="green" title="Shipping Instruction Details">
+          <v-layout>
+            <v-flex xs12 md6>
+              <tr>
+                <td>
+                  <b>
+                    <p>Expected Time Departure</p>
+                  </b>
+                </td>
+                <td>: {{ konten.etd }}</td>
+              </tr>
+            </v-flex>
+            <v-flex xs12 md6>
+              <tr>
+                <td>
+                  <b>
+                    <p>Expexted Time Arrival</p>
+                  </b>
+                </td>
+                <td>: {{ konten.eta }}</td>
+              </tr>
+            </v-flex>
+          </v-layout>
 
-            <v-layout>
-              <v-flex xs12 md6>
-                <tr>
-                  <td>
-                    <b>
-                      <p>Port of Discharge</p>
-                    </b>
-                  </td>
-                  <td>: {{ konten.pod }}</td>
-                </tr>
-              </v-flex>
-              <v-flex xs12 md6>
-                <tr>
-                  <td>
-                    <b>
-                      <p>Port of Loading</p>
-                    </b>
-                  </td>
-                  <td>: {{ konten.pol }}</td>
-                </tr>
-              </v-flex>
-            </v-layout>
+          <v-layout>
+            <v-flex xs12 md6>
+              <tr>
+                <td>
+                  <b>
+                    <p>Port of Discharge</p>
+                  </b>
+                </td>
+                <td>: {{ konten.pod }}</td>
+              </tr>
+            </v-flex>
+            <v-flex xs12 md6>
+              <tr>
+                <td>
+                  <b>
+                    <p>Port of Loading</p>
+                  </b>
+                </td>
+                <td>: {{ konten.pol }}</td>
+              </tr>
+            </v-flex>
+          </v-layout>
 
-            
-            <v-layout>
-              <v-flex xs12 md6>
-                <tr>
-                  <td>
-                    <b>
-                      <p>Inovice Number</p>
-                    </b>
-                  </td>
-                  <td>: {{ konten.invoiceNum }}</td>
-                </tr>
-              </v-flex>
-            </v-layout>
+          <v-layout>
+            <v-flex xs12 md6>
+              <tr>
+                <td>
+                  <b>
+                    <p>Inovice Number</p>
+                  </b>
+                </td>
+                <td>: {{ konten.invoiceNum }}</td>
+              </tr>
+            </v-flex>
+          </v-layout>
 
-            <v-layout>
-              <v-flex xs12 md6>
-                <tr>
-                  <td>
-                    <b>
-                      <p>Staff in Charge</p>
-                    </b>
-                  </td>
-                  <td>: {{ konten.staff }}</td>
-                </tr>
-              </v-flex>
-              <v-flex xs12 md6>
-                <tr>
-                  <td>
-                    <b>
-                      <p>Payment Status</p>
-                    </b>
-                  </td>
-                  <td>: {{ konten.paymentStatus }}</td>
-                </tr>
-              </v-flex>
-            </v-layout>
+          <v-layout>
+            <v-flex xs12 md6>
+              <tr>
+                <td>
+                  <b>
+                    <p>Staff in Charge</p>
+                  </b>
+                </td>
+                <td>: {{ konten.staff }}</td>
+              </tr>
+            </v-flex>
+            <v-flex xs12 md6>
+              <tr>
+                <td>
+                  <b>
+                    <p>Payment Status</p>
+                  </b>
+                </td>
+                <td>: {{ konten.paymentStatus }}</td>
+              </tr>
+            </v-flex>
+          </v-layout>
 
-            
-<!-- ==================================== Shipment Product ============================================ -->
-            <br>
-            <h3>Shipment Product</h3>
-            <hr>
-            <v-card-text>
-                <v-data-table
-                  :headers="headers"
-                  :items="konten.produkDetail"
-                  :loading="true"
-                  class="elevation-1"
-              >
+          <!-- ==================================== Shipment Product ============================================ -->
+          <br>
+          <h3>Shipment Product</h3>
+          <hr>
+          <v-card-text>
+            <v-data-table
+              :headers="headers"
+              :items="konten.produkDetail"
+              :loading="true"
+              class="elevation-1"
+            >
               <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
-                  <template
-                  slot="headerCell"
-                  slot-scope="{ header }"
-                  >
-                  <span
-                      class="subheading font-weight-light text-success text--darken-3"
-                      v-text="header.text"
-                  />
-                  </template>
-                  <template v-slot:items="props">
-                  <tr @click="showAlert(props.item)">
-                      <td class="text-xs-right">{{ props.item.ponum }}</td>
-                      <td class="text-xs-right">{{ props.item.productName }}</td>
-                      <td class="text-xs-right">{{ props.item.quantity }}</td>
-                      <td class="text-xs-right">{{ props.item.productUnit }}</td>
-                      <td class="text-xs-right">{{ props.item.productDesc }}</td>
-                      <td class="text-xs-right">{{ props.item.grossWeight }}</td>
-                      <td class="text-xs-right">{{ props.item.netWeight }}</td>
-                  </tr>
-                  </template>
-                </v-data-table>
-            </v-card-text>
-            <v-btn color="blue" dark class="mb-2" @click="editSI(konten)">Edit</v-btn>
+              <template slot="headerCell" slot-scope="{ header }">
+                <span
+                  class="subheading font-weight-light text-success text--darken-3"
+                  v-text="header.text"
+                />
+              </template>
+              <template v-slot:items="props">
+                <tr @click="showAlert(props.item)">
+                  <td class="text-xs-right">{{ props.item.ponum }}</td>
+                  <td class="text-xs-right">{{ props.item.productName }}</td>
+                  <td class="text-xs-right">{{ props.item.quantity }}</td>
+                  <td class="text-xs-right">{{ props.item.productUnit }}</td>
+                  <td class="text-xs-right">{{ props.item.productDesc }}</td>
+                  <td class="text-xs-right">{{ props.item.grossWeight }}</td>
+                  <td class="text-xs-right">{{ props.item.netWeight }}</td>
+                </tr>
+              </template>
+            </v-data-table>
+          </v-card-text>
+          <v-btn color="blue" dark class="mb-2" @click="editSI(konten)">Edit</v-btn>
 
-<!-- ==================================== Shipment Document ============================================ -->
+          <!-- ==================================== Shipment Document ============================================ -->
 
-             <br>
-             <v-layout>
+          <br>
+          <v-layout>
             <h3>Shipment Document</h3>
-             <v-btn color="primary" dark class="mb-2" @click="addDoc(konten)"> Add New</v-btn>
-             </v-layout>
-            <hr>
-            <v-card-text>
-                <v-data-table
-                  :headers="headersDoc"
-                  :items="document"
-                  :loading="true"
-                  class="elevation-1"
-              >
+            <v-btn color="primary" dark class="mb-2" @click="addDoc(konten)">Add New</v-btn>
+          </v-layout>
+          <hr>
+          <v-card-text>
+            <v-data-table
+              :headers="headersDoc"
+              :items="document"
+              :loading="true"
+              class="elevation-1"
+            >
               <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
-                  <template
-                  slot="headerCell"
-                  slot-scope="{ header }"
-                  >
-                  <span
-                      class="subheading font-weight-light text-success text--darken-3"
-                      v-text="header.text"
-                  />
-                  </template>
-                  <template v-slot:items="props">
-                  <tr @click="docDetail(props.item)">
-                      <td class="text-xs-center">{{ props.item.name }}</td>
-                      <td class="text-xs-center">{{ props.item.createdDate }}</td>
-                      <td class="text-xs-center">{{ props.item.status }}</td>
-                  </tr>
-                  </template>
-                </v-data-table>
-            </v-card-text>
+              <template slot="headerCell" slot-scope="{ header }">
+                <span
+                  class="subheading font-weight-light text-success text--darken-3"
+                  v-text="header.text"
+                />
+              </template>
+              <template v-slot:items="props">
+                <tr @click="docDetail(props.item)">
+                  <td class="text-xs-center">{{ props.item.name }}</td>
+                  <td class="text-xs-center">{{ props.item.createdDate }}</td>
+                  <td class="text-xs-center">{{ props.item.status }}</td>
+                </tr>
+              </template>
+            </v-data-table>
+          </v-card-text>
         </material-card>
       </v-flex>
     </v-layout>
@@ -176,123 +156,128 @@
 </template>
 
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 
 export default {
   data: () => ({
     headers: [
       {
         sortable: false,
-        text: 'PO Number',
-        value: 'poNum'
+        text: "PO Number",
+        value: "poNum"
       },
       {
         sortable: false,
-        text: 'Name',
-        value: 'Name'
+        text: "Name",
+        value: "Name"
       },
       {
         sortable: false,
-        text: 'Quantity',
-        value: 'quantity',
-        align: 'right'
+        text: "Quantity",
+        value: "quantity",
+        align: "right"
       },
       {
         sortable: false,
-        text: 'Product Unit',
-        value: 'productUnit'
+        text: "Product Unit",
+        value: "productUnit"
       },
       {
         sortable: false,
-        text: 'Product Description',
-        value: 'productUnit'
+        text: "Product Description",
+        value: "productUnit"
       },
       {
         sortable: false,
-        text: 'Gross Weight',
-        value: 'grossWeight'
+        text: "Gross Weight",
+        value: "grossWeight"
       },
       {
         sortable: false,
-        text: 'Net Weight',
-        value: 'netWeight'
+        text: "Net Weight",
+        value: "netWeight"
       }
     ],
     konten: {
-        eta: '',
-        etd: '',
-        poD: '',
-        poL: '',
-        shipmentStatus: '',
-        finalDestination: '',
-        invoiceNum: '',
-        produkDetail: [],
-        shipmentId: '',
-        staff: '',
-        paymentStatus: ''
+      eta: "",
+      etd: "",
+      poD: "",
+      poL: "",
+      shipmentStatus: "",
+      finalDestination: "",
+      invoiceNum: "",
+      produkDetail: [],
+      shipmentId: "",
+      staff: "",
+      paymentStatus: ""
     },
-    status: ['On Shipment', 'Available', 'Validating', 'Arrived'],
+    status: ["On Shipment", "Available", "Validating", "Arrived"],
     document: [],
     headersDoc: [
       {
         sortable: false,
-        text: 'Name',
-        value: 'name'
+        text: "Name",
+        value: "name"
       },
       {
         sortable: false,
-        text: 'Created Date',
-        value: 'createdDate'
+        text: "Created Date",
+        value: "createdDate"
       },
       {
         sortable: false,
-        text: 'Status',
-        value: 'status',
-      
-      }]
+        text: "Status",
+        value: "status"
+      }
+    ]
   }),
-  beforeCreate: function () {
-        if (!this.$session.exists()) {
-          this.$router.push('/login')
-          console.log("belon login")
-        }
-        //rolenya sokap?
-        if (!this.$session.get("role") === "Customer") {
-          this.$router.push('/')
-          console.log("bukan staff")
-        }
-        
-      },
+  beforeCreate: function() {
+    if (!this.$session.exists()) {
+      this.$router.push("/login");
+      console.log("belon login");
+    }
+    //rolenya sokap?
+    if (!this.$session.get("role") === "Customer") {
+      this.$router.push("/");
+      console.log("bukan staff");
+    }
+  },
 
-  mounted () {
-    var idSI = this.$route.query.id 
-    Axios.get('http://mciexport.herokuapp.com/api/cust/si?id=' + idSI)
-      .then(response => { this.konten = response.data.result })
-      .then(console.log(this.response)).catch(function error(params) {
+  mounted() {
+    var idSI = this.$route.query.id;
+    Axios.get("http://localhost:8099/api/cust/si?id=" + idSI)
+      .then(response => {
+        this.konten = response.data.result;
       })
+      .then(console.log(this.response))
+      .catch(function error(params) {});
 
-      Axios.get('http://mciexport.herokuapp.com/api/get/document?id=' + idSI)
-      .then(response => { this.document = response.data.result })
-      .the(console.log(this.response)).catch(function error(params) {
+    Axios.get("http://localhost:8099/api/get/document?id=" + idSI)
+      .then(response => {
+        this.document = response.data.result;
       })
+      .the(console.log(this.response))
+      .catch(function error(params) {});
   },
   methods: {
-    editSI(a){
+    editSI(a) {
       this.$router.push({ path: "/si/edit", query: { id: a.shipmentId } });
     },
-    addDoc(a){
-      this.$router.push({ path: '/document/add', query: { id: a.shipmentId } });
+    addDoc(a) {
+      this.$router.push({ path: "/document/add", query: { id: a.shipmentId } });
     },
-    docDetail(a){
-      this.$router.push({ path: '/document/detail', query: { id: a.id } });
+    docDetail(a) {
+      this.$router.push({ path: "/document/detail", query: { id: a.id } });
     }
   }
-}
+};
 </script>
 
 <style scoped>
-  .spacing-playground .v-select .v-input__prepend-outer, .v-text-field, .spacing-playground .v-select .v-input__append-outer{
-    margin-top: 0.55rem;
-    margin-right: 0.5rem;
-  }
+.spacing-playground .v-select .v-input__prepend-outer,
+.v-text-field,
+.spacing-playground .v-select .v-input__append-outer {
+  margin-top: 0.55rem;
+  margin-right: 0.5rem;
+}
 </style>

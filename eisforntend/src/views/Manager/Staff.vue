@@ -79,7 +79,7 @@ export default {
     }
   },
   mounted() {
-    Axios.get("http://mciexport.herokuapp.com/api/getAllStaff")
+    Axios.get("http://localhost:8099/api/getAllStaff")
       .then(response => {
         this.konten = response.data.result;
         console.log(response.data.result);

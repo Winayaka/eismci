@@ -1,21 +1,8 @@
 <template>
-  <v-container
-    fill-height
-    fluid
-    grid-list-xl>
-    <v-layout
-      justify-start
-      wrap
-    >
-      <v-flex
-        xs12 
-        md4
-      >
-        <material-card
-          class="v-card-profile"
-          title="Customer Details"
-          width=600           
-        >
+  <v-container fill-height fluid grid-list-xl>
+    <v-layout justify-start wrap>
+      <v-flex xs12 md4>
+        <material-card class="v-card-profile" title="Customer Details" width="600">
           <v-card-text>
             <v-container>
               <tr class="card-description font-weight-light">
@@ -51,24 +38,13 @@
             </v-container>
           </v-card-text>
           <v-card-text>
-            <v-btn
-              color="success"
-              round
-              class="font-weight-light"
-            @click="toEdit(konten)"
-            >Edit</v-btn>
+            <v-btn color="success" round class="font-weight-light" @click="toEdit(konten)">Edit</v-btn>
           </v-card-text>
         </material-card>
       </v-flex>
     </v-layout>
-    <v-layout
-      justify-start
-      wrap
-      >
-            <v-flex
-        xs12
-        md4
-      >
+    <v-layout justify-start wrap>
+      <v-flex xs12 md4>
         <!-- <material-card 
         class="v-card-profile"
         title="User Details"
@@ -132,91 +108,105 @@
               @click="activeDeactivate(konten)">
               Change Status
               </v-btn>
-        </material-card> -->
+        </material-card>-->
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   data: () => ({
     fullAddress: "",
-    edit : "",
-    namaCustomer : "",
-    activeStatus : "",
+    edit: "",
+    namaCustomer: "",
+    activeStatus: "",
     user: []
   }),
   computed: {
-    konten (){
-    var isi = {}
-    isi = this.user
-    isi.fullAddress = isi.street + " " + isi.addressNumber + " " + isi.postalCode + " " + isi.city + " " + isi.region + " " + isi.country
-    isi.fullName = isi.firstName + " " + isi.lastName
-    console.log(this.isi)
-    return isi
+    konten() {
+      var isi = {};
+      isi = this.user;
+      isi.fullAddress =
+        isi.street +
+        " " +
+        isi.addressNumber +
+        " " +
+        isi.postalCode +
+        " " +
+        isi.city +
+        " " +
+        isi.region +
+        " " +
+        isi.country;
+      isi.fullName = isi.firstName + " " + isi.lastName;
+      console.log(this.isi);
+      return isi;
     }
   },
-  mounted () {
-    var namaCustomer = this.$route.query.custName
+  mounted() {
+    var namaCustomer = this.$route.query.custName;
     axios({
-      method: 'get',
-      url: 'http://localhost:8099/api/getCustomer?custName='+namaCustomer
+      method: "get",
+      url: "http://localhost:8099/api/getCustomer?custName=" + namaCustomer
     })
-    .then(response => {
-      console.log(response.data.result);
-      this.user = response.data.result;
-      
-      // console.log(this.konten.custName)
-      // console.log(this.konten)
-    })
-    .catch(function (error){
-      console.log(error)
-    });
-    console.log(this.konten)
+      .then(response => {
+        console.log(response.data.result);
+        this.user = response.data.result;
+
+        // console.log(this.konten.custName)
+        // console.log(this.konten)
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    console.log(this.konten);
   },
   methods: {
-    showAlert (a) {
-      alert(a.custName)
-      this.$router.push('/customer/detail/' + a.custName)
+    showAlert(a) {
+      alert(a.custName);
+      this.$router.push("/customer/detail/" + a.custName);
     },
-    onEdit(){
-      if(this.editProperty.nowEdit){
-        this.editProperty.nowEdit = false
-        this.editProperty.custName = "edit"
-        console.log(this.konten)
-        console.log(this.oldData)
-      this.konten = this.oldData
-        console.log(this.konten)
-        console.log(this.oldData)
+    onEdit() {
+      if (this.editProperty.nowEdit) {
+        this.editProperty.nowEdit = false;
+        this.editProperty.custName = "edit";
+        console.log(this.konten);
+        console.log(this.oldData);
+        this.konten = this.oldData;
+        console.log(this.konten);
+        console.log(this.oldData);
+      } else {
+        this.editProperty.nowEdit = true;
+        this.editProperty.custName = "cancel";
       }
-      else{
-        this.editProperty.nowEdit = true
-        this.editProperty.custName = "cancel"
-      }
     },
-    toEdit(){
-      this.$router.push({path :'/customer/edit', query : {custName : this.konten.custName}} )
+    toEdit() {
+      this.$router.push({
+        path: "/customer/edit",
+        query: { custName: this.konten.custName }
+      });
     },
-    activeDeactivate(customer){
-      var currentStatus = customer.user.activestatus
-      console.log("tombol aktivasi/deaktivasi ditekan")
-      Axios.post('http://mciexport.herokuapp.com/api/changeCustomerStatus?id='+ customer.id, {
-      })
-      .then(function (response) {
-        console.log(response);
-        if(currentStatus){
-          this.currentStatus = false
-        }
-        else{
-          this.currentStatus = true
-        }
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+    activeDeactivate(customer) {
+      var currentStatus = customer.user.activestatus;
+      console.log("tombol aktivasi/deaktivasi ditekan");
+      Axios.post(
+        "http://localhost:8099/api/changeCustomerStatus?id=" + customer.id,
+        {}
+      )
+        .then(function(response) {
+          console.log(response);
+          if (currentStatus) {
+            this.currentStatus = false;
+          } else {
+            this.currentStatus = true;
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
-}
+};
 </script>

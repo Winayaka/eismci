@@ -7,91 +7,85 @@
         </template>
       </v-breadcrumbs>
       <v-flex>
-        <material-card
-          color="green"
-          title="Edit Purchase Order"
-          text="Insert required information"
-        >
-
+        <material-card color="green" title="Edit Purchase Order" text="Insert required information">
           <v-form class="container">
             <v-container>
               <v-layout wrap align-center justify-center>
                 <v-flex xs12 md10>
                   <v-text-field
-                      v-model="POForm.number"
-                      :value="POForm.number"
-                      :rules="[rules.required, rules.max50]"
-                      counter
-                      maxlength="50"
-                      v-on:keyup="checkNumber"
-                      type="text"
-                      label="PO Number"
-                      :items="PO"
-                      :error-messages="errorMessage"
-                      required
-                    />
-                </v-flex>
-
-                <v-flex xs12 md10>
-                  <v-text-field 
-                      label="Date"
-                      type="date"
-                      :value="POForm.date"
-                      v-model="POForm.date"
-                      required
-                      />
-                </v-flex>
-
-                <v-flex xs12 md10>
-                  <v-text-field 
-                      label="ETA"
-                      type="date"
-                      :value="POForm.shipment"
-                      v-model="POForm.shipment"
-                      required
-                      />
-                </v-flex>
-
-                <v-flex xs12 md10>
-                  <v-text-field 
-                      label="Supplier"
-                      type = "text"
-                      :rules="[rules.required, rules.max50]"
-                      counter
-                      maxlength="50"
-                      :value="POForm.supplierName"
-                      v-model="POForm.supplierName"
-                       :error-messages="errorMessage"
-                      required
-                      />
+                    v-model="POForm.number"
+                    :value="POForm.number"
+                    :rules="[rules.required, rules.max50]"
+                    counter
+                    maxlength="50"
+                    v-on:keyup="checkNumber"
+                    type="text"
+                    label="PO Number"
+                    :items="PO"
+                    :error-messages="errorMessage"
+                    required
+                  />
                 </v-flex>
 
                 <v-flex xs12 md10>
                   <v-text-field
-                        label="Vessel"
-                        type = 'text'
-                         :rules="[rules.required, rules.max50]"
-                      counter
-                      maxlength="50"
-                        :value="POForm.vessel"
-                        v-model="POForm.vessel"
-                        :error-messages="errorMessage"
-                        required
-                        />
+                    label="Date"
+                    type="date"
+                    :value="POForm.date"
+                    v-model="POForm.date"
+                    required
+                  />
                 </v-flex>
 
                 <v-flex xs12 md10>
                   <v-text-field
-                        label="PO Number (Supplier)"
-                        type = 'text'
-                         :rules="[rules.required, rules.max50]"
+                    label="ETA"
+                    type="date"
+                    :value="POForm.shipment"
+                    v-model="POForm.shipment"
+                    required
+                  />
+                </v-flex>
 
-                        counter
-                        maxlength="50"
-                        :value="POForm.poNumSupplier"
-                        v-model="POForm.poNumSupplier"
-                        required
-                        />
+                <v-flex xs12 md10>
+                  <v-text-field
+                    label="Supplier"
+                    type="text"
+                    :rules="[rules.required, rules.max50]"
+                    counter
+                    maxlength="50"
+                    :value="POForm.supplierName"
+                    v-model="POForm.supplierName"
+                    :error-messages="errorMessage"
+                    required
+                  />
+                </v-flex>
+
+                <v-flex xs12 md10>
+                  <v-text-field
+                    label="Vessel"
+                    type="text"
+                    :rules="[rules.required, rules.max50]"
+                    counter
+                    maxlength="50"
+                    :value="POForm.vessel"
+                    v-model="POForm.vessel"
+                    :error-messages="errorMessage"
+                    required
+                  />
+                </v-flex>
+
+                <v-flex xs12 md10>
+                  <v-text-field
+                    label="PO Number (Supplier)"
+                    type="text"
+                    :rules="[rules.required, rules.max50]"
+                    counter
+                    maxlength="50"
+                    :value="POForm.poNumSupplier"
+                    v-model="POForm.poNumSupplier"
+                    required
+                  />
                 </v-flex>
               </v-layout>
             </v-container>
@@ -120,41 +114,51 @@
                                 item-value="name"
                                 label="Select Product"
                                 required
-                              />
-                              />
+                              />/>
                             </v-flex>
                             <v-flex xs12 sm6 md4>
-                              <v-text-field v-model="editedItem.quantity" label="Quantity" 
-                              counter
-                               maxlength="20"
-                               v-on:keyup="checkNumber"  
+                              <v-text-field
+                                v-model="editedItem.quantity"
+                                label="Quantity"
+                                counter
+                                maxlength="20"
+                                v-on:keyup="checkNumber"
                               ></v-text-field>
                             </v-flex>
                             <v-flex xs12 sm6 md4>
-                              <v-text-field v-model="editedItem.freightCost" label="Freight cost"
-                               counter
-                               maxlength="20"
-                               v-on:keyup="checkNumber" ></v-text-field>
+                              <v-text-field
+                                v-model="editedItem.freightCost"
+                                label="Freight cost"
+                                counter
+                                maxlength="20"
+                                v-on:keyup="checkNumber"
+                              ></v-text-field>
                             </v-flex>
                             <v-flex xs12 sm6 md4>
-                              <v-text-field v-model="editedItem.pricePerUnit" label="Price/Unit"
-                               counter
-                               maxlength="20"
-                               v-on:keyup="checkNumber" ></v-text-field>
+                              <v-text-field
+                                v-model="editedItem.pricePerUnit"
+                                label="Price/Unit"
+                                counter
+                                maxlength="20"
+                                v-on:keyup="checkNumber"
+                              ></v-text-field>
                             </v-flex>
                             <v-flex xs12 sm6 md4>
-                              <v-text-field v-model="editedItem.quantityRemaining" label="Quantity remaining"
-                               counter
-                               maxlength="20"
-                               v-on:keyup="checkNumber" ></v-text-field>
+                              <v-text-field
+                                v-model="editedItem.quantityRemaining"
+                                label="Quantity remaining"
+                                counter
+                                maxlength="20"
+                                v-on:keyup="checkNumber"
+                              ></v-text-field>
                             </v-flex>
                             <v-flex xs12 sm6 md4>
                               <v-text-field
                                 v-model="editedItem.containerQuantity"
                                 label="Container quantity"
-                                 counter
-                               maxlength="20"
-                               v-on:keyup="checkNumber" 
+                                counter
+                                maxlength="20"
+                                v-on:keyup="checkNumber"
                               ></v-text-field>
                             </v-flex>
                             <v-flex xs12 sm6 md4>
@@ -168,11 +172,7 @@
                               />
                             </v-flex>
                             <v-flex xs12 sm6 md4>
-                              <v-text-field
-                                v-model="editedItem.date"
-                                label="Date"
-                                type="date"
-                              ></v-text-field>
+                              <v-text-field v-model="editedItem.date" label="Date" type="date"></v-text-field>
                             </v-flex>
                           </v-layout>
                         </v-container>
@@ -237,17 +237,16 @@ import Vue from "vue";
 import Axios from "axios";
 export default {
   data: () => ({
-    beforeCreate: function () {
-    if (!this.$session.exists()) {
-      this.$router.push('/login')
-      console.log("belon login")
-    }
-    if (!this.$session.get("role") === "Manager") {
-      this.$router.push('/')
-      console.log("bukan staff")
-    }
-    
-  },
+    beforeCreate: function() {
+      if (!this.$session.exists()) {
+        this.$router.push("/login");
+        console.log("belon login");
+      }
+      if (!this.$session.get("role") === "Manager") {
+        this.$router.push("/");
+        console.log("bukan staff");
+      }
+    },
     items: [
       {
         text: "Dashboard",
@@ -266,7 +265,7 @@ export default {
       }
     ],
     valid: true,
-       rules: {
+    rules: {
       required: value => !!value || "The input is required.",
       max20: v => v.length <= 20 || "Input must be less than 20 characters",
       max50: v => v.length <= 50 || "Input must be less than 50 characters",
@@ -277,7 +276,7 @@ export default {
     product: [],
     editedIndex: -1,
     editedItem: {
-      id:"0",
+      id: "0",
       product: {
         name: ""
       },
@@ -287,11 +286,11 @@ export default {
       quantityRemaining: "",
       containerQuantity: "",
       container: {
-        name:""
+        name: ""
       }
     },
     defaultItem: {
-      id:"0",
+      id: "0",
       product: {
         name: ""
       },
@@ -301,7 +300,7 @@ export default {
       quantityRemaining: "",
       containerQuantity: "",
       container: {
-        name:""
+        name: ""
       }
     },
     numberExisted: "",
@@ -361,19 +360,19 @@ export default {
   mounted() {
     // this.$validator.localize("en", this.dictionary);
     var id = this.$route.query.id;
-    Axios.get('http://mciexport.herokuapp.com/api/po/?id=' + id)
+    Axios.get("http://localhost:8099/api/po/?id=" + id)
       .then(response => {
         this.POForm = response.data.result;
         this.product = response.data.result.purchaseOrder;
         this.POForm.supplierName = response.data.result.namaSupplier;
       })
       .then(console.log(this.url));
-    Axios.get("http://mciexport.herokuapp.com/api/getAllContainer")
+    Axios.get("http://localhost:8099/api/getAllContainer")
       .then(response => {
         this.container = response.data.result;
       })
       .then(console.log(this.response));
-    Axios.get("http://mciexport.herokuapp.com/api/getAllProduct")
+    Axios.get("http://localhost:8099/api/getAllProduct")
       .then(response => {
         this.products = response.data.result;
       })
@@ -383,12 +382,12 @@ export default {
     editPO() {
       var id = this.$route.query.id;
       var POForm = this.POForm;
-      var product= this.product;
-      Axios.post("http://mciexport.herokuapp.com/api/po/update?id=" + id, {
+      var product = this.product;
+      Axios.post("http://localhost:8099/api/po/update?id=" + id, {
         number: POForm.number,
         shipment: POForm.shipment,
         date: POForm.date,
-        supplierName:  POForm.supplierName,
+        supplierName: POForm.supplierName,
         vessel: POForm.vessel,
         poNumSupplier: POForm.poNumSupplier,
         product: product
@@ -422,10 +421,7 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(
-          this.product[this.editedIndex],
-          this.editedItem
-        );
+        Object.assign(this.product[this.editedIndex], this.editedItem);
       } else {
         this.product.push(this.editedItem);
       }

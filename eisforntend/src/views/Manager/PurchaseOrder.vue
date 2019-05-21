@@ -68,7 +68,7 @@ export default {
     datetimebener: ""
   }),
   mounted() {
-    Axios.get("http://mciexport.herokuapp.com/api/getAllPurchaseOrder")
+    Axios.get("http://localhost:8099/api/getAllPurchaseOrder")
       .then(response => {
         this.konten = response.data.result;
         this.datetimebener = this.konten.eta;

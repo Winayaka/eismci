@@ -385,7 +385,7 @@ export default {
 
   mounted() {
     // this.$validator.localize("en", this.dictionary);
-    Axios.get("http://mciexport.herokuapp.com/api/pi/all").then(response => {
+    Axios.get("http://localhost:8099/api/pi/all").then(response => {
       var proformaInvoices = response.data.result;
       var proformaInvoicesNumber = [];
       for (var i = 0; i < proformaInvoices.length; i++) {
@@ -394,15 +394,15 @@ export default {
       this.proformaInvoicesNumber = proformaInvoicesNumber;
     });
 
-    Axios.get("http://mciexport.herokuapp.com/api/getAllCustomer").then(response => {
+    Axios.get("http://localhost:8099/api/getAllCustomer").then(response => {
       this.customers = response.data.result;
     });
 
-    Axios.get("http://mciexport.herokuapp.com/api/getAllContainer").then(response => {
+    Axios.get("http://localhost:8099/api/getAllContainer").then(response => {
       this.container = response.data.result;
     });
 
-    Axios.get("http://mciexport.herokuapp.com/api/getAllProduct").then(response => {
+    Axios.get("http://localhost:8099/api/getAllProduct").then(response => {
       this.products = response.data.result;
     });
   },

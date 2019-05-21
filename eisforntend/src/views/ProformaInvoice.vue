@@ -66,45 +66,47 @@ export default {
 
   mounted() {
     var self = this;
-    Axios.get("http://mciexport.herokuapp.com/api/pi/all")
+    Axios.get("http://localhost:8099/api/pi/all")
       .then(response => {
         this.konten = response.data.result;
         console.log(this.$session.get.role);
-        })
+      })
       .then(console.log(this.response));
-   },
+  },
 
-  beforeCreate: function () {
+  beforeCreate: function() {
     if (!this.$session.exists()) {
-      this.$router.push('/')
-      console.log("belon login")
+      this.$router.push("/");
+      console.log("belon login");
     }
 
     if (!this.$session.get("role") === "Manager") {
-      alert(this.$session.get("role"))
-      this.$router.push('/')
-      console.log("bukan staff")
+      alert(this.$session.get("role"));
+      this.$router.push("/");
+      console.log("bukan staff");
     }
 
     if (!this.$session.get("role") === "StaffAdministrative") {
-      alert(this.$session.get("role"))
-      this.$router.push('/')
-      console.log("bukan staff")
+      alert(this.$session.get("role"));
+      this.$router.push("/");
+      console.log("bukan staff");
     }
 
     if (!this.$session.get("role") === "StafExport") {
-      alert(this.$session.get("role"))
-      this.$router.push('/')
-      console.log("bukan staff")
+      alert(this.$session.get("role"));
+      this.$router.push("/");
+      console.log("bukan staff");
     }
-    
   },
-  
+
   methods: {
     showAlert(a) {
       var role = this.$session.get("role");
       var roleUrl = role.toLowerCase();
-      this.$router.push({ path: "/"+roleUrl+"/pi/detail", query: { id: a.id } });
+      this.$router.push({
+        path: "/" + roleUrl + "/pi/detail",
+        query: { id: a.id }
+      });
     }
   }
 };

@@ -294,13 +294,13 @@ export default {
   mounted() {
     var idPI = this.$route.query.id;
     this.pi = idPI;
-    Axios.get("http://mciexport.herokuapp.com/api/pi?id=" + idPI)
+    Axios.get("http://localhost:8099/api/pi?id=" + idPI)
       .then(response => {
         this.selectedPI = response.data.result;
       })
       .then(console.log(this.url));
 
-    Axios.get("http://mciexport.herokuapp.com/api/get/si/?PIId=" + idPI)
+    Axios.get("http://localhost:8099/api/get/si/?PIId=" + idPI)
       .then(response => {
         this.SI = response.data.result;
       })

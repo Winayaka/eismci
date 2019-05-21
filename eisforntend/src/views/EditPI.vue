@@ -381,21 +381,21 @@ export default {
     // this.$validator.localize("en", this.dictionary);
     var id = this.$route.query.id;
     console.log(id);
-    Axios.get("http://mciexport.herokuapp.com/api/pi?id=" + id).then(response => {
+    Axios.get("http://localhost:8099/api/pi?id=" + id).then(response => {
       this.PIForm = response.data.result;
       this.productDetailList = response.data.result.detailProduct;
       console.log(this.PIForm);
     });
 
-    Axios.get("http://mciexport.herokuapp.com/api/getAllCustomer").then(response => {
+    Axios.get("http://localhost:8099/api/getAllCustomer").then(response => {
       this.customers = response.data.result;
     });
 
-    Axios.get("http://mciexport.herokuapp.com/api/getAllContainer").then(response => {
+    Axios.get("http://localhost:8099/api/getAllContainer").then(response => {
       this.container = response.data.result;
     });
 
-    Axios.get("http://mciexport.herokuapp.com/api/getAllProduct").then(response => {
+    Axios.get("http://localhost:8099/api/getAllProduct").then(response => {
       this.products = response.data.result;
     });
   },
@@ -410,7 +410,7 @@ export default {
       console.log("PI ID: " + id);
       console.log(PIForm);
       console.log(productDetailList);
-      Axios.post("http://mciexport.herokuapp.com/api/pi/update?id=" + id, {
+      Axios.post("http://localhost:8099/api/pi/update?id=" + id, {
         number: PIForm.number,
         date: PIForm.date,
         customerID: PIForm.customerID,

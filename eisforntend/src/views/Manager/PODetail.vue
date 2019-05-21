@@ -151,7 +151,7 @@ export default {
     const idSI = this.$route.query.id;
     this.id = idSI;
     console.log("tes");
-    Axios.get("http://mciexport.herokuapp.com/api/po/?id=" + this.id)
+    Axios.get("http://localhost:8099/api/po/?id=" + this.id)
       .then(response => {
         this.konten = response.data.result;
       })

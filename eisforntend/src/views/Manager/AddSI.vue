@@ -269,7 +269,7 @@ export default {
     var idPI = this.$route.query.id;
     this.konten.proformaInvoiceId = idPI;
     // get all purchase order
-    Axios.get("http://mciexport.herokuapp.com/api/getAllPurchaseOrder")
+    Axios.get("http://localhost:8099/api/getAllPurchaseOrder")
       .then(response => {
         this.PO = response.data.result;
       })
@@ -277,21 +277,21 @@ export default {
       .catch(function error(params) {});
 
     // get PI Spesific
-    Axios.get("http://mciexport.herokuapp.com/api/pi?id=" + idPI)
+    Axios.get("http://localhost:8099/api/pi?id=" + idPI)
       .then(response => {
         this.PI = response.data.result;
       })
       .then(console.log(this.response))
       .catch(function error(params) {});
     //Get all Transaction
-    Axios.get("http://mciexport.herokuapp.com/api/getAllPIPOTrans")
+    Axios.get("http://localhost:8099/api/getAllPIPOTrans")
       .then(response => {
         this.PIPODetail = response.data.result;
       })
       .then(console.log(this.response))
       .catch(function error(params) {});
     //Get all staff
-    Axios.get("http://mciexport.herokuapp.com/api/getAllStaff")
+    Axios.get("http://localhost:8099/api/getAllStaff")
       .then(response => {
         this.staff = response.data.result;
       })
@@ -352,7 +352,7 @@ export default {
     },
     submitSI(SI) {
       console.log(SI);
-      Axios.post("http://mciexport.herokuapp.com/api/si/add", {
+      Axios.post("http://localhost:8099/api/si/add", {
         proformaInvoiceId: SI.proformaInvoiceId,
         number: SI.number,
         purchaseOrderId: SI.purchaseOrderId,

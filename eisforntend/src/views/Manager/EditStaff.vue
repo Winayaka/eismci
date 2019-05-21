@@ -165,7 +165,7 @@ export default {
   mounted() {
     var namaStaff = this.$route.query.staffName;
     console.log(this.$route.query.staffName);
-    var url = "http://mciexport.herokuapp.com/api/getStaff?name=" + namaStaff;
+    var url = "http://localhost:8099/api/getStaff?name=" + namaStaff;
     console.log(url);
     Axios.get(url)
       .then(response => {
@@ -243,8 +243,7 @@ export default {
       if (isOk) {
         var self = this;
         Axios.post(
-          "http://mciexport.herokuapp.com/api/editStaff?staffId=" +
-            staff.staffId,
+          "http://localhost:8099/api/editStaff?staffId=" + staff.staffId,
           {
             name: staff.name,
             email: staff.email,

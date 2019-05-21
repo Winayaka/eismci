@@ -207,8 +207,7 @@ export default {
   mounted() {
     var namaCustomer = this.$route.query.custName;
     console.log(this.$route.query.custName);
-    var url =
-      "http://mciexport.herokuapp.com/api/getCustomer?custName=" + namaCustomer;
+    var url = "http://localhost:8099/api/getCustomer?custName=" + namaCustomer;
     console.log(url);
     axios
       .get(url)
@@ -250,8 +249,7 @@ export default {
       console.log("tombol aktivasi/deaktivasi ditekan");
       axios
         .post(
-          "http://mciexport.herokuapp.com/api/changeCustomerStatus?id=" +
-            customer.id,
+          "http://localhost:8099/api/changeCustomerStatus?id=" + customer.id,
           {}
         )
         .then(function(response) {
@@ -362,8 +360,7 @@ export default {
         console.log(customer);
         axios({
           method: "post",
-          url:
-            "http://mciexport.herokuapp.com/api/editCustomer?id=" + customer.id,
+          url: "http://localhost:8099/api/editCustomer?id=" + customer.id,
           data: {
             title: customer.title,
             custName: customer.custName,
@@ -380,7 +377,7 @@ export default {
             description: customer.description
           }
         })
-          //   axios.post('http://mciexport.herokuapp.com/api/editCustomer?=' + customer.id,
+          //   axios.post('http://localhost:8099/api/editCustomer?=' + customer.id,
           //   {
           //   title : customer.title,
           //   custName : customer.custName,

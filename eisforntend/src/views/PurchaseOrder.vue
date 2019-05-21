@@ -1,26 +1,14 @@
 <template>
-  <v-container
-    fill-height
-    fluid
-    grid-list-xl
-  >
-     <v-layout justify-center wrap>
-      <v-flex
-        md12
-      >
+  <v-container fill-height fluid grid-list-xl>
+    <v-layout justify-center wrap>
+      <v-flex md12>
         <material-card
           color="green"
           title="Purchase Orders"
           text="Click row to see Purchase Order Detail"
         >
-          <v-data-table
-            :headers="headers"
-            :items="konten"
-          >
-            <template
-              slot="headerCell"
-              slot-scope="{ header }"
-            >
+          <v-data-table :headers="headers" :items="konten">
+            <template slot="headerCell" slot-scope="{ header }">
               <span
                 class="subheading font-weight-light text-success text--darken-3"
                 v-text="header.text"
@@ -38,35 +26,33 @@
           </v-data-table>
         </material-card>
       </v-flex>
-      
+
       <v-btn
-    color="success"
-    round
-    bottom
-    class="font-weight-light"
-    @click="addPurchaseOrder()">
-    Add Purchase Order
-    </v-btn>
+        color="success"
+        round
+        bottom
+        class="font-weight-light"
+        @click="addPurchaseOrder()"
+      >Add Purchase Order</v-btn>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 export default {
-   beforeCreate: function () {
+  beforeCreate: function() {
     if (!this.$session.exists()) {
-      this.$router.push('/login')
-      console.log("belon login")
+      this.$router.push("/login");
+      console.log("belon login");
     }
     if (!this.$session.get("role") === "Manager") {
-      this.$router.push('/')
-      console.log("bukan staff")
+      this.$router.push("/");
+      console.log("bukan staff");
     }
-    
   },
   data: () => ({
-      items: [
+    items: [
       {
         text: "Home",
         disabled: false,
@@ -81,49 +67,48 @@ export default {
     headers: [
       {
         sortable: false,
-        text: 'PO Number',
-        value: 'number'
+        text: "PO Number",
+        value: "number"
       },
       {
         sortable: false,
-        text: 'Data',
-        value: 'date'
+        text: "Data",
+        value: "date"
       },
       {
         sortable: false,
-        text: 'ETA',
-        value: 'shipment'
+        text: "ETA",
+        value: "shipment"
       },
       {
         sortable: false,
-        text: 'Supplier',
-        value: 'namaSupplier'
+        text: "Supplier",
+        value: "namaSupplier"
       },
       {
         sortable: false,
-        text: 'Vessel',
-        value: 'vessel'
-      }    
+        text: "Vessel",
+        value: "vessel"
+      }
     ],
     konten: [],
     datetimebener: ""
   }),
-  mounted () {
-    Axios.get('http://mciexport.herokuapp.com/api/getAllPurchaseOrder')
+  mounted() {
+    Axios.get("http://localhost:8099/api/getAllPurchaseOrder")
       .then(response => {
-         this.konten = response.data.result 
-         this.datetimebener = this.konten.eta
-         
-         })
-      .then(console.log(this.response))
+        this.konten = response.data.result;
+        this.datetimebener = this.konten.eta;
+      })
+      .then(console.log(this.response));
   },
   methods: {
-    showAlert (a) {
-      this.$router.push({path :'/po/detail', query : {id : a.id}} )
+    showAlert(a) {
+      this.$router.push({ path: "/po/detail", query: { id: a.id } });
     },
-     addPurchaseOrder(){
-      this.$router.push({path :'/po/add'})
+    addPurchaseOrder() {
+      this.$router.push({ path: "/po/add" });
     }
   }
-}
+};
 </script>

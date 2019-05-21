@@ -129,14 +129,14 @@ export default {
 
   mounted() {
     var id = this.$route.query.id;
-    Axios.get("http://mciexport.herokuapp.com/api/document?id=" + id)
+    Axios.get("http://localhost:8099/api/document?id=" + id)
       .then(response => {
         this.document = response.data.result;
       })
       .then(console.log(this.response))
       .catch(function error(params) {});
 
-    Axios.get("http://mciexport.herokuapp.com/api/note?id=" + this.docId)
+    Axios.get("http://localhost:8099/api/note?id=" + this.docId)
       .then(response => {
         this.notes = response.data.result;
       })
@@ -146,7 +146,7 @@ export default {
   methods: {
     download(a) {
       Axios({
-        url: "http://mciexport.herokuapp.com/api/download?id=" + a.id, //your url
+        url: "http://localhost:8099/api/download?id=" + a.id, //your url
         method: "GET",
         responseType: "blob" // important
       }).then(response => {
@@ -165,7 +165,7 @@ export default {
 
       this.notes.push(this.editedNotes);
       console.log(this.notes);
-      Axios.post("http://mciexport.herokuapp.com/api/add/note", {
+      Axios.post("http://localhost:8099/api/add/note", {
         documentId: this.docId,
         doc: this.notes
       });

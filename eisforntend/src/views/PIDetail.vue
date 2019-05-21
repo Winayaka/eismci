@@ -291,40 +291,39 @@ export default {
       }
     ]
   }),
-  beforeCreate: function () {
+  beforeCreate: function() {
     if (!this.$session.exists()) {
-      this.$router.push('/')
-      console.log("belon login")
+      this.$router.push("/");
+      console.log("belon login");
     }
 
     if (!this.$session.get("role") === "Manager") {
-      alert(this.$session.get("role"))
-      this.$router.push('/')
-      console.log("bukan staff")
+      alert(this.$session.get("role"));
+      this.$router.push("/");
+      console.log("bukan staff");
     }
 
     if (!this.$session.get("role") === "StaffAdministrative") {
-      alert(this.$session.get("role"))
-      this.$router.push('/')
-      console.log("bukan staff")
+      alert(this.$session.get("role"));
+      this.$router.push("/");
+      console.log("bukan staff");
     }
 
     if (!this.$session.get("role") === "StafExport") {
-      alert(this.$session.get("role"))
-      this.$router.push('/')
-      console.log("bukan staff")
+      alert(this.$session.get("role"));
+      this.$router.push("/");
+      console.log("bukan staff");
     }
-    
   },
   mounted() {
     var idPI = this.$route.query.id;
-    Axios.get("http://mciexport.herokuapp.com/api/pi?id=" + idPI)
+    Axios.get("http://localhost:8099/api/pi?id=" + idPI)
       .then(response => {
         this.selectedPI = response.data.result;
       })
       .then(console.log(this.url));
 
-    Axios.get("http://mciexport.herokuapp.com/api/get/si/?PIId=" + idPI)
+    Axios.get("http://localhost:8099/api/get/si/?PIId=" + idPI)
       .then(response => {
         this.SI = response.data.result;
       })
@@ -334,16 +333,22 @@ export default {
   methods: {
     editPI() {
       var idPI = this.selectedPI.id;
-      this.$router.push({ path: "/StaffAdministrative/pi/edit", query: { id: idPI } });
+      this.$router.push({
+        path: "/StaffAdministrative/pi/edit",
+        query: { id: idPI }
+      });
     },
     SIDetail(SI) {
       var role = this.$session.get("role");
       var roleUrl = role.toLowerCase();
-      this.$router.push({ path: "/"+roleUrl+"/si/detail/", query: { id: SI.id } });
+      this.$router.push({
+        path: "/" + roleUrl + "/si/detail/",
+        query: { id: SI.id }
+      });
     },
-    addSI(){
-       var idPI = this.$route.query.id;
-       this.$router.push({ path: '/manager/si/add', query: { id: idPI }});
+    addSI() {
+      var idPI = this.$route.query.id;
+      this.$router.push({ path: "/manager/si/add", query: { id: idPI } });
     }
   }
 };

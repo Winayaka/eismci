@@ -154,9 +154,7 @@ export default {
     var namaCustomer = this.$route.query.custName;
     axios({
       method: "get",
-      url:
-        "http://mciexport.herokuapp.com/api/getCustomer?custName=" +
-        namaCustomer
+      url: "http://localhost:8099/api/getCustomer?custName=" + namaCustomer
     })
       .then(response => {
         console.log(response.data.result);
@@ -196,8 +194,7 @@ export default {
       var currentStatus = customer.user.activestatus;
       console.log("tombol aktivasi/deaktivasi ditekan");
       Axios.post(
-        "http://mciexport.herokuapp.com/api/changeCustomerStatus?id=" +
-          customer.id,
+        "http://localhost:8099/api/changeCustomerStatus?id=" + customer.id,
         {}
       )
         .then(function(response) {

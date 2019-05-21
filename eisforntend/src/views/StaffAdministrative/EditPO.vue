@@ -360,19 +360,19 @@ export default {
   mounted() {
     // this.$validator.localize("en", this.dictionary);
     var id = this.$route.query.id;
-    Axios.get("http://mciexport.herokuapp.com/api/po/?id=" + id)
+    Axios.get("http://localhost:8099/api/po/?id=" + id)
       .then(response => {
         this.POForm = response.data.result;
         this.product = response.data.result.purchaseOrder;
         this.POForm.supplierName = response.data.result.namaSupplier;
       })
       .then(console.log(this.url));
-    Axios.get("http://mciexport.herokuapp.com/api/getAllContainer")
+    Axios.get("http://localhost:8099/api/getAllContainer")
       .then(response => {
         this.container = response.data.result;
       })
       .then(console.log(this.response));
-    Axios.get("http://mciexport.herokuapp.com/api/getAllProduct")
+    Axios.get("http://localhost:8099/api/getAllProduct")
       .then(response => {
         this.products = response.data.result;
       })
@@ -383,7 +383,7 @@ export default {
       var id = this.$route.query.id;
       var POForm = this.POForm;
       var product = this.product;
-      Axios.post("http://mciexport.herokuapp.com/api/po/update?id=" + id, {
+      Axios.post("http://localhost:8099/api/po/update?id=" + id, {
         number: POForm.number,
         shipment: POForm.shipment,
         date: POForm.date,

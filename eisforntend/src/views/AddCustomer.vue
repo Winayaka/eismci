@@ -178,9 +178,9 @@ export default {
     },
     addCustomer(customer) {
       console.log("tombol addCustomer ditekan");
-  
+
       var isOk = true;
-     
+
       if (customer.title == "" || !/^[a-zA-Z]+$/.test(customer.title)) {
         isOk = false;
         console.log("title kosong");
@@ -262,7 +262,7 @@ export default {
         isOk = false;
         console.log("password kosong");
       }
- 
+
       if (customer.user.password != customer.user.repeatPassword) {
         isOk = false;
         console.log("password berbeda");
@@ -271,7 +271,7 @@ export default {
       if (isOk) {
         console.log("ok gan");
         axios
-          .post("http://mciexport.herokuapp.com/api/addCustomer", {
+          .post("http://localhost:8099/api/addCustomer", {
             title: customer.title,
             custName: customer.custName,
             firstName: customer.firstName,

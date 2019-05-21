@@ -46,7 +46,7 @@ export default {
     konten: []
   }),
   mounted() {
-    Axios.get("http://mciexport.herokuapp.com/api/getAllCustomer")
+    Axios.get("http://localhost:8099/api/getAllCustomer")
       .then(response => {
         this.konten = response.data.result;
       })

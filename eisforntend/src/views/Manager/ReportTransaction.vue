@@ -114,9 +114,7 @@ export default {
       today = yyyy + "-" + mm + "-" + dd;
 
       var url =
-        "http://mciexport.herokuapp.com/api/getReport?date=" +
-        today +
-        "&period=weekly";
+        "http://localhost:8099/api/getReport?date=" + today + "&period=weekly";
       console.log(url);
       Axios.get(url)
         .then(response => {
@@ -134,7 +132,7 @@ export default {
       this.displayPeriod = period;
       this.input.date = date;
       var url =
-        "http://mciexport.herokuapp.com/api/getReport?period=" +
+        "http://localhost:8099/api/getReport?period=" +
         period +
         "&date=" +
         date;

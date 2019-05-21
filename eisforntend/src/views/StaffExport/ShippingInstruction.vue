@@ -85,9 +85,7 @@ export default {
     //var idStaff = this.$route.query.id;
     //var idStaff = this.$session.get("id_role")
     var idStaff = 2;
-    Axios.get(
-      "http://mciexport.herokuapp.com/api/get/si/assigned?StaffId=" + idStaff
-    )
+    Axios.get("http://localhost:8099/api/get/si/assigned?StaffId=" + idStaff)
       .then(response => {
         this.konten = response.data.result;
       })
