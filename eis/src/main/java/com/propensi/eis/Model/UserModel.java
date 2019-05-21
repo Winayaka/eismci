@@ -21,7 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-@Table(name = "user_mci")
+@Table(name = "user")
 public class UserModel implements Serializable {
     private static final long serialVersionUID = 3358344709517334834L;
 

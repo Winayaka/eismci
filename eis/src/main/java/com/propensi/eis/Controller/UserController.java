@@ -33,12 +33,11 @@ public class UserController {
 
     @PostMapping(value = "/login")
     @ResponseBody
-    public BaseResponse<LoginResponse> login(@RequestBody LoginForm loginForm,
-                                             BindingResult bindingResult){
+    public BaseResponse<LoginResponse> login(@RequestBody LoginForm loginForm, BindingResult bindingResult) {
         BaseResponse<LoginResponse> response = new BaseResponse<LoginResponse>();
         LoginResponse responseObject = new LoginResponse();
 
-        System.out.println("test");
+        // System.out.println("test");
         if (bindingResult.hasErrors()) {
             response.setStatus(500);
             response.setMessage("Error");
@@ -58,16 +57,14 @@ public class UserController {
                         response.setStatus(200);
                         response.setMessage("Login Success");
                         responseObject.setRole(target.getRole());
-                        if (target.getStaff() == null){
-                            responseObject.setId(target.getCustomer().getId());                            
-                        }
-                        else{
+                        if (target.getStaff() == null) {
+                            responseObject.setId(target.getCustomer().getId());
+                        } else {
                             responseObject.setId(target.getStaff().getStaffId());
                         }
                         response.setResult(responseObject);
-                        
-                    }
-                    else{
+
+                    } else {
                         response.setStatus(503);
                         response.setMessage("Wrong Password");
                     }
