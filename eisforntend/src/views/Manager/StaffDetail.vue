@@ -2,6 +2,7 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-start wrap>
       <v-flex xs12 md4>
+        <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
         <material-card class="v-card-profile" title="Staff Details" width="600">
           <v-card-text class="text-xs-left">
             <v-flex xs12 md4>
@@ -95,6 +96,22 @@
 import Axios from "axios";
 export default {
   data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "Staff",
+        disabled: false,
+        href: "/manager/staff"
+      },
+      {
+        text: "Staff Detail",
+        disabled: true
+      }
+    ],
     konten: {
       staffId: "",
       name: "",

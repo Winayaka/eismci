@@ -7,6 +7,7 @@
         </template>
       </v-breadcrumbs>-->
       <v-flex>
+        <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
         <material-card color="green" title="Priotity Shipping Instructions">
           <br>
           <v-layout>
@@ -81,6 +82,22 @@ import Axios from "axios";
 
 export default {
   data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "Report",
+        disabled: false,
+        href: "/manager/report"
+      },
+      {
+        text: "Priority Transaction",
+        disabled: true
+      }
+    ],
     items: [
       {
         text: "Dashboard",

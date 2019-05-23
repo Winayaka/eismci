@@ -138,7 +138,8 @@ Form Shipment Product
 ================================================================================================
               -->
               <div>
-                <v-toolbar flat color="white">
+                1
+                <v-toolbar flat color="white" align-left justify-space-between row fill-height>
                   <v-toolbar-title>Shipping Product</v-toolbar-title>
                   <v-divider class="mx-2" inset vertical></v-divider>
                   <v-spacer></v-spacer>
