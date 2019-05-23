@@ -7,7 +7,7 @@
         </div>
         <material-card color="green" title="Add Shipping Instruction">
           <v-container>
-            <v-form v-model="valid">
+            <v-form>
               <v-text-field label="PI No." :value="PI.number" v-model="PI.number" disabled/>
               <v-select
                 label="PO No."
@@ -131,74 +131,82 @@
                 counter
                 maxlength="50"
               />
-              <div>
-                <v-toolbar flat color="white">
-                  <v-toolbar-title align="left">Shipping Product</v-toolbar-title>
-                  <v-divider class="mx-2" inset vertical></v-divider>
-                  <v-spacer></v-spacer>
-                  <v-dialog v-model="dialog" max-width="500px">
-                    <template v-slot:activator="{ on }">
-                      <v-btn color="primary" dark class="mb-2" v-on="on">Add New</v-btn>
-                    </template>
-                    <v-card>
-                      <v-card-title>
-                        <span class="headline">{{ formTitle }}</span>
-                      </v-card-title>
-
-                      <v-card-text>
-                        <v-container grid-list-md>
-                          <v-layout wrap>
-                            <v-flex xs12 sm6 md4>
-                              <v-select
-                                label="Produk"
-                                :items="PIPODetail"
-                                item-text="pipoid"
-                                :value="editedItem.pipoid"
-                                v-model="editedItem.pipoid"
-                                :rules="rules.required"
-                              />
-                            </v-flex>
-
-                            <v-flex xs12 sm6 md4>
-                              <v-text-field
-                                type="number"
-                                v-model="editedItem.quantity"
-                                label="Quantity"
-                                :rules="rules.required"
-                              ></v-text-field>
-                            </v-flex>
-                          </v-layout>
-                        </v-container>
-                      </v-card-text>
-
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-                        <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </v-dialog>
-                </v-toolbar>
-                <v-data-table :headers="siProduct" :items="konten.produkDetail" class="elevation-1">
-                  <template v-slot:items="props">
-                    <td class="text-xs-center">{{ props.item.productName }}</td>
-                    <td class="text-xs-center">{{ props.item.ponum }}</td>
-                    <td class="text-xs-center">{{ props.item.quantity }}</td>
-                    <td class="text-xs-center">{{ props.item.pipoid }}</td>
-                    <td class="justify-center layout px-0">
-                      <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-                      <v-icon small @click="deleteItem(props.item)">delete</v-icon>
-                    </td>
-                  </template>
-                  <template v-slot:no-data>
-                    <!-- <v-btn color="primary" @click="initialize">Reset</v-btn> -->
-                  </template>
-                </v-data-table>
-              </div>
-
-              <v-btn color="success" @click="submitSI(konten)">Submit</v-btn>
             </v-form>
           </v-container>
+          <v-layout align-left justify-space-between row fill-height>
+            <v-toolbar flat color="white">
+              <v-toolbar-title>Shipping Product(s)</v-toolbar-title>
+              <v-divider class="mx-2" inset vertical></v-divider>
+              <v-spacer></v-spacer>
+              <v-dialog v-model="dialog" max-width="500px">
+                <template v-slot:activator="{ on }">
+                  <v-btn color="primary" dark class="mb-2" v-on="on" @click="f">+Add New</v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="headline">{{ formTitle }}</span>
+                  </v-card-title>
+
+                  <v-card-text>
+                    <v-container grid-list-md>
+                      <v-layout wrap>
+                        <v-flex xs12 sm6 md4>
+                          <v-select
+                            label="Produk"
+                            :items="PIPODetail"
+                            item-text="poNum"
+                            item-value="pipoid"
+                            :value="editedItem.pipoid"
+                            v-model="editedItem.pipoid"
+                            :rules="rules.required"
+                            @change="assign"
+                          />
+                        </v-flex>
+
+                        <v-flex xs12 sm6 md4>
+                          <v-text-field
+                            type="number"
+                            v-model="editedItem.quantity"
+                            label="Quantity"
+                            :rules="rules.required"
+                          ></v-text-field>
+                        </v-flex>
+                      </v-layout>
+                    </v-container>
+                  </v-card-text>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
+                    <v-btn color="blue darken-1" flat @click="save">Save</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-toolbar>
+          </v-layout>
+          <v-data-table :headers="siProduct" :items="konten.produkDetail" class="elevation-1">
+            <template v-slot:items="props">
+              <td class="text-xs-left">{{ props.item.productName }}</td>
+              <td class="text-xs-left">{{ props.item.poNum }}</td>
+              <td class="text-xs-left">{{ props.item.quantity }}</td>
+              <td class="justify-center layout px-0">
+                <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
+                <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+              </td>
+            </template>
+            <template v-slot:no-data>
+              <!-- <v-btn color="primary" @click="initialize">Reset</v-btn> -->
+            </template>
+          </v-data-table>
+          <v-layout>
+            <v-flex xs6 class="text-xs-left">
+              <v-btn color="warning" round @click="cancel()">Cancel</v-btn>
+            </v-flex>
+            <v-spacer></v-spacer>
+            <v-flex xs6 class="text-xs-right">
+              <v-btn color="green" round @click="submitSI(konten)">Submit</v-btn>
+            </v-flex>
+          </v-layout>
         </material-card>
       </v-flex>
       <v-dialog v-model="successDialog" persistent width="400">
@@ -235,12 +243,12 @@ export default {
       {
         text: "Proforma Invoice",
         disabled: false,
-        href: "/pi"
+        href: "/manager/pi"
       },
       {
         text: "Proforma Invoice Detail",
-        disabled: false
-        // href: urlBefor
+        disabled: false,
+        href: ""
       },
       {
         text: "Add Shipping Instruction",
@@ -275,6 +283,8 @@ export default {
     paymentStatus: ["Paid", "Not Paid"],
     staff: [],
     editedItem: {
+      productName: "",
+      poNum: "",
       pipoid: "",
       quantity: ""
     },
@@ -295,11 +305,6 @@ export default {
         sortable: false,
         text: "Quantity",
         value: "quantity"
-      },
-      {
-        sortable: false,
-        text: "Final Destination",
-        value: "final destination"
       }
     ],
     rules: {
@@ -322,6 +327,9 @@ export default {
   mounted() {
     var idPI = this.$route.query.id;
     this.konten.proformaInvoiceId = idPI;
+
+    this.bredcrumbs[this.bredcrumbs.length - 2].href =
+      "/manager/pi/detail?id=" + idPI;
     // get all purchase order
     Axios.get("http://localhost:8099/api/getAllPurchaseOrder")
       .then(response => {
@@ -363,16 +371,25 @@ export default {
     }
   },
   methods: {
+    cancel() {
+      var r = confirm("are you sure want to cancel?");
+      if (r) {
+        this.$router.go(-1);
+      }
+    },
+
     editItem(item) {
       this.editedIndex = this.konten.produkDetail.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
+
     deleteItem(item) {
       const index = this.konten.produkDetail.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
         this.konten.produkDetail.splice(index, 1);
     },
+
     close() {
       this.dialog = false;
       setTimeout(() => {
@@ -380,6 +397,7 @@ export default {
         this.editedIndex = -1;
       }, 300);
     },
+
     save() {
       if (this.editedIndex > -1) {
         Object.assign(
@@ -392,18 +410,50 @@ export default {
       }
       this.close();
     },
+
     addNewProduct() {
       this.konten.produkDetail.push({
         pipoid: "",
         quantity: ""
       });
     },
-    dropdown() {
-      alert("bambaang");
-    },
+
     delProductForm(index) {
       this.konten.product.splice(index, 1);
     },
+
+    f() {
+      var i;
+      console.log(this.PIPODetail);
+      for (i = 0; i < this.PIPODetail.length; i++) {
+        //alert("a");
+        var a =
+          this.PIPODetail[i].ponum + " - " + this.PIPODetail[i].productName;
+        this.PIPODetail[i].poNum = a;
+        //alert(a)
+      }
+    },
+
+    assign(item) {
+      var temp;
+      var i;
+      console.log(item);
+
+      for (i = 0; i < this.PIPODetail.length; i++) {
+        if (this.PIPODetail[i].pipoid == item) temp = this.PIPODetail[i];
+      }
+
+      this.editedItem.poNum = temp.poNum.split(" - ")[0];
+      this.editedItem.productName = temp.poNum.split(" - ")[1];
+      console.log(this.editedItem);
+    },
+    //   var ponum = item.poNum.split(" ")[0];
+    //   var prodName = item.poNum.split(" ")[1];
+    //   this.editedItem.productName = prodName;
+    //   this.editedItem.ponum = ponum;
+    //   this.editedItem.pipoid = item.pipoid;
+    // },
+
     submitSI(SI) {
       console.log(SI);
       var ok = true;
@@ -472,6 +522,7 @@ export default {
           });
       } else {
         alert("Input data is wrong");
+        SI.produkDetail = [];
       }
     }
   }

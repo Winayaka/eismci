@@ -1,6 +1,7 @@
 <template>
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-start wrap>
+      <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
       <v-flex xs12 md4>
         <material-card class="v-card-profile" title="Customer Details" width="600">
           <v-card-text>
@@ -123,6 +124,23 @@
 import axios from "axios";
 export default {
   data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "Customer",
+        disabled: false,
+        href: "/manager/customer"
+      },
+      {
+        text: "Customer Detail",
+        disabled: true,
+        href: "/manager/customer"
+      }
+    ],
     fullAddress: "",
     edit: "",
     namaCustomer: "",

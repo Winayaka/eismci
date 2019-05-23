@@ -2,6 +2,9 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex md12>
+        <div>
+          <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
+        </div>
         <material-card color="green" title="Shipping Instruction Details">
           <v-layout>
             <v-flex xs12 md6>
@@ -189,7 +192,6 @@
           <!-- ==================================== Shipment Product ============================================ -->
           <br>
           <h3>Shipment Product</h3>
-          <hr>
           <v-card-text>
             <v-data-table
               :headers="headers"
@@ -220,13 +222,17 @@
           <v-btn color="blue" dark class="mb-2" @click="editSI(konten)">Edit</v-btn>
 
           <!-- ==================================== Shipment Document ============================================ -->
-
-          <br>
-          <v-layout>
-            <h3>Shipment Document</h3>
-            <v-btn color="primary" dark class="mb-2" @click="addDoc(konten)">Add New</v-btn>
-          </v-layout>
           <hr>
+
+          <v-layout>
+            <v-flex xs6 class="text-xs-left">
+              <h3>Shipment Document</h3>
+            </v-flex>
+            <v-spacer></v-spacer>
+            <v-flex xs6 class="text-xs-right">
+              <v-btn color="primary" dark class="mb-2" @click="addDoc(konten)">Add New</v-btn>
+            </v-flex>
+          </v-layout>
           <v-card-text>
             <v-data-table
               :headers="headersDoc"
@@ -260,6 +266,27 @@
 import Axios from "axios";
 export default {
   data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "Proforma Invoice",
+        disabled: false,
+        href: "/manager/pi"
+      },
+      {
+        text: "Proforma Invoice Detail",
+        disabled: false,
+        href: ""
+      },
+      {
+        text: "Shipping Instruction Detail",
+        disabled: false
+      }
+    ],
     headers: [
       {
         sortable: false,
@@ -352,17 +379,14 @@ export default {
       this.$router.push("/");
       console.log("bukan staff");
     }
-    if (!this.$session.get("role") === "StafExport") {
-      alert(this.$session.get("role"));
-      this.$router.push("/");
-      console.log("bukan staff");
-    }
   },
   mounted() {
     var idSI = this.$route.query.id;
     Axios.get("http://localhost:8099/api/si/?id=" + idSI)
       .then(response => {
         this.konten = response.data.result;
+        this.bredcrumbs[this.bredcrumbs.length - 2].href =
+          "/manager/pi/detail?id=" + response.data.result.piid;
       })
       .then(console.log(this.response))
       .catch(function error(params) {});

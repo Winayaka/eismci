@@ -42,7 +42,7 @@ export default {
       {
         text: "Proforma Invoice",
         disabled: true,
-        href: "/pi"
+        href: "/manager/pi"
       }
     ],
     role: "",

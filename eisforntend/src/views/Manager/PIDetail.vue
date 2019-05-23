@@ -150,7 +150,7 @@
           </v-card-text>
         </material-card>
 
-        <material-card
+        <!-- <material-card
           color="green"
           title="List Used Purchase Order"
           text="Click row to see details."
@@ -174,7 +174,7 @@
               </template>
             </v-data-table>
           </v-card-text>
-        </material-card>
+        </material-card>-->
 
         <material-card
           color="green"
