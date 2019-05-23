@@ -150,7 +150,7 @@
           </v-card-text>
         </material-card>
 
-        <!-- <material-card
+        <material-card
           color="green"
           title="List Used Purchase Order"
           text="Click row to see details."
@@ -166,15 +166,15 @@
               </template>
               <template v-slot:items="props">
                 <tr @click="SIDetail(props.item)">
-                  <td>{{ props.item.number }}</td>
-                  <td>{{ props.item.liner }}</td>
-                  <td>{{ props.item.finalDestination }}</td>
-                  <td>{{ props.item.shipmentStatus }}</td>
+                  <td class="text-xs-left">{{ props.item.number }}</td>
+                  <td class="text-xs-left">{{ props.item.liner }}</td>
+                  <td class="text-xs-left">{{ props.item.finalDestination }}</td>
+                  <td class="text-xs-left">{{ props.item.shipmentStatus }}</td>
                 </tr>
               </template>
             </v-data-table>
           </v-card-text>
-        </material-card>-->
+        </material-card>
 
         <material-card
           color="green"
@@ -192,22 +192,13 @@
               </template>
               <template v-slot:items="props">
                 <tr @click="SIDetail(props.item)">
-                  <td>{{ props.item.number }}</td>
-                  <td>{{ props.item.liner }}</td>
-                  <td>{{ props.item.finalDestination }}</td>
-                  <td>{{ props.item.shipmentStatus }}</td>
+                  <td class="text-xs-left">{{ props.item.number }}</td>
+                  <td class="text-xs-left">{{ props.item.liner }}</td>
+                  <td class="text-xs-left">{{ props.item.finalDestination }}</td>
+                  <td class="text-xs-left">{{ props.item.shipmentStatus }}</td>
                 </tr>
               </template>
             </v-data-table>
-          </v-card-text>
-        </material-card>
-
-        <material-card color="green" title="Staff in Charge">
-          <v-card-text>
-            <td>{{ selectedPI.userId }}</td>
-            <td>{{ selectedPI.id }}</td>
-            <td>{{ selectedPI.title }}</td>
-            <td>{{ selectedPI.body }}</td>
           </v-card-text>
         </material-card>
       </v-flex>
@@ -232,17 +223,17 @@ export default {
       {
         text: "Dashboard",
         disabled: false,
-        href: "/dashboard"
+        href: "/"
       },
       {
         text: "Proforma Invoice",
         disabled: false,
-        href: "/pi"
+        href: "/manager/pi"
       },
       {
         text: "Proforma Invoice Detail",
         disabled: true,
-        href: "/pi/detail"
+        href: "/manager/pi/detail"
       }
     ],
     selectedPI: [],

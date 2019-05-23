@@ -69,7 +69,7 @@ export default [
   // ====================
   {
     path: "/customer/document/detail",
-    view: "documentDetail",
+    view: "Customer/DocumentDetail",
     props: true,
     role: "Customer"
   },
@@ -341,5 +341,5 @@ export default [
     name: "PI-PO",
     view: "Manager/PIPOspecial",
     role: "Manager"
-  },
+  }
 ];

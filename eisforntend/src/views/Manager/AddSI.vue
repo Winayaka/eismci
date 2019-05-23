@@ -2,11 +2,10 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex md12>
-        <material-card
-          color="green"
-          title="Add Shipping Instruction"
-          text="Here is a subtitle for this table"
-        >
+        <div>
+          <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
+        </div>
+        <material-card color="green" title="Add Shipping Instruction">
           <v-container>
             <v-form v-model="valid">
               <v-text-field label="PI No." :value="PI.number" v-model="PI.number" disabled/>
@@ -22,7 +21,9 @@
                 label="SI No."
                 :value="konten.number"
                 v-model="konten.number"
-                :rules="rules.required"
+                :rules="[rules.required, rules.max50]"
+                counter
+                maxlength="50"
               />
               <v-text-field label="ETA" type="date" :value="konten.eTA" v-model="konten.eTA"/>
               <v-text-field
@@ -36,13 +37,17 @@
                 label="Port of Discharge"
                 :value="konten.poD"
                 v-model="konten.poD"
-                :rules="rules.required"
+                :rules="[rules.required, rules.max50]"
+                counter
+                maxlength="50"
               />
               <v-text-field
                 label="Port of Loading"
                 :value="konten.poL"
                 v-model="konten.poL"
-                :rules="rules.required"
+                :rules="[rules.required, rules.max50]"
+                counter
+                maxlength="50"
               />
               <v-select
                 label="Shipment Status"
@@ -62,7 +67,9 @@
                 label="Final Destination"
                 :value="konten.finalDestination"
                 v-model="konten.finalDestination"
-                :rules="rules.required"
+                :rules="[rules.required, rules.max50]"
+                counter
+                maxlength="50"
               />
               <v-layout>
                 <v-text-field
@@ -96,7 +103,9 @@
                 label="Liner"
                 :value="konten.liner"
                 v-model="konten.liner"
-                :rules="rules.required"
+                :rules="[rules.required, rules.max50]"
+                counter
+                maxlength="50"
               />
               <v-select
                 label="Staff in Charge"
@@ -110,16 +119,21 @@
                 label="Vessel"
                 :value="konten.vesselName"
                 v-model="konten.vesselName"
-                :rules="rules.required"
+                :rules="[rules.required, rules.max50]"
+                counter
+                maxlength="50"
               />
               <v-text-field
                 label="Connecting Vessel"
                 :value="konten.connectingVessel"
                 v-model="konten.connectingVessel"
+                :rules="rules.max50"
+                counter
+                maxlength="50"
               />
               <div>
                 <v-toolbar flat color="white">
-                  <v-toolbar-title>Shipping Product</v-toolbar-title>
+                  <v-toolbar-title align="left">Shipping Product</v-toolbar-title>
                   <v-divider class="mx-2" inset vertical></v-divider>
                   <v-spacer></v-spacer>
                   <v-dialog v-model="dialog" max-width="500px">
@@ -187,6 +201,22 @@
           </v-container>
         </material-card>
       </v-flex>
+      <v-dialog v-model="successDialog" persistent width="400">
+        <v-card>
+          <v-card-title class="headline grey lighten-2" primary-title>Congratulations!</v-card-title>
+          <v-card-text>You have successfull add Shipping Instruction.</v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-layout align-center justify-end fill-height>
+              <v-btn
+                color="blue darken-1"
+                flat
+                @click="$router.push({ path: '/manager/pi/detail', query: {id : konten.proformaInvoiceId}})"
+              >Back</v-btn>
+            </v-layout>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-layout>
   </v-container>
 </template>
@@ -195,6 +225,28 @@
 import Axios from "axios";
 export default {
   data: () => ({
+    successDialog: false,
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "Proforma Invoice",
+        disabled: false,
+        href: "/pi"
+      },
+      {
+        text: "Proforma Invoice Detail",
+        disabled: false
+        // href: urlBefor
+      },
+      {
+        text: "Add Shipping Instruction",
+        disabled: true
+      }
+    ],
     konten: {
       proformaInvoiceId: "",
       number: "",
@@ -251,7 +303,9 @@ export default {
       }
     ],
     rules: {
-      required: [v => !!v || "The input is required"]
+      required: [v => !!v || "The input is required."],
+      max50: [v => v.length <= 50 || "Input must be less than 50 characters"],
+      max255: [v => v.length <= 50 || "Input must be less than 255 characters"]
     }
   }),
   beforeCreate: function() {
@@ -273,7 +327,7 @@ export default {
       .then(response => {
         this.PO = response.data.result;
       })
-      .then(console.log(this.response))
+      // .then(console.log(this.response))
       .catch(function error(params) {});
 
     // get PI Spesific
@@ -281,7 +335,7 @@ export default {
       .then(response => {
         this.PI = response.data.result;
       })
-      .then(console.log(this.response))
+      // .then(console.log(this.response))
       .catch(function error(params) {});
     //Get all Transaction
     Axios.get("http://localhost:8099/api/getAllPIPOTrans")
@@ -295,7 +349,7 @@ export default {
       .then(response => {
         this.staff = response.data.result;
       })
-      .then(console.log(this.response))
+      // .then(console.log(this.response))
       .catch(function error(params) {});
   },
   computed: {
@@ -344,7 +398,7 @@ export default {
         quantity: ""
       });
     },
-    cekidot() {
+    dropdown() {
       alert("bambaang");
     },
     delProductForm(index) {
@@ -352,42 +406,73 @@ export default {
     },
     submitSI(SI) {
       console.log(SI);
-      Axios.post("http://localhost:8099/api/si/add", {
-        proformaInvoiceId: SI.proformaInvoiceId,
-        number: SI.number,
-        purchaseOrderId: SI.purchaseOrderId,
-        staff: SI.staff,
-        vesselName: SI.vesselName,
-        connectingVessel: SI.connectingVessel,
-        liner: SI.liner,
-        openDate: SI.openDate,
-        openTime: SI.openTime,
-        closeDate: SI.closeDate,
-        closeTime: SI.closeTime,
-        poL: SI.poL,
-        poD: SI.poD,
-        eTA: SI.eTA,
-        etdep: SI.etdep,
-        finalDestination: SI.finalDestination,
-        status: SI.status,
-        paymentStatus: SI.paymentStatus,
-        product: SI.produkDetail,
-        invoice: null
-      })
-        .then(response => {
-          if (response.data.status == 200) {
-            alert("Add  Success");
-            this.$router.go(-1);
-          } else {
-            alert(response.data.status);
-            alert(response.data.message);
-            alert("error");
-          }
+      var ok = true;
+      if (SI.number == "") {
+        ok = false;
+      }
+      if (SI.staff == "" || !/^[0-9]\d*$/.test(SI.staff)) {
+        ok = false;
+      }
+      if ((SI.vesselName = "")) {
+        ok = false;
+      }
+      if ((SI.liner = "")) {
+        ok = false;
+      }
+      if ((SI.poL = "")) {
+        ok = false;
+      }
+      if ((SI.poD = "")) {
+        ok = false;
+      }
+      if ((SI.finalDestination = "")) {
+        ok = false;
+      }
+      var i;
+      for (i = 0; i < SI.produkDetail.length; i++) {
+        if (SI.produkDetail[i].quantity == "") {
+          ok = false;
+        }
+      }
+      if (ok) {
+        Axios.post("http://localhost:8099/api/si/add", {
+          proformaInvoiceId: SI.proformaInvoiceId,
+          number: SI.number,
+          purchaseOrderId: SI.purchaseOrderId,
+          staff: SI.staff,
+          vesselName: SI.vesselName,
+          connectingVessel: SI.connectingVessel,
+          liner: SI.liner,
+          openDate: SI.openDate,
+          openTime: SI.openTime,
+          closeDate: SI.closeDate,
+          closeTime: SI.closeTime,
+          poL: SI.poL,
+          poD: SI.poD,
+          eTA: SI.eTA,
+          etdep: SI.etdep,
+          finalDestination: SI.finalDestination,
+          status: SI.status,
+          paymentStatus: SI.paymentStatus,
+          product: SI.produkDetail,
+          invoice: null
         })
-        .catch(function(error) {
-          console.log(error);
-          alert(error);
-        });
+          .then(response => {
+            if (response.data.status == 200) {
+              this.successDialog = true;
+              //this.$router.go(-1);
+            } else {
+              alert(response.data.message);
+              alert("error");
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+            alert(error);
+          });
+      } else {
+        alert("Input data is wrong");
+      }
     }
   }
 };
@@ -399,5 +484,8 @@ export default {
 .spacing-playground .v-select .v-input__append-outer {
   margin-top: 0.55rem;
   margin-right: 0.5rem;
+}
+.v-text-field .v-label {
+  font-size: 50px;
 }
 </style>

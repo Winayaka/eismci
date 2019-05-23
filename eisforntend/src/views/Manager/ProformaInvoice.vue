@@ -2,6 +2,9 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex md12>
+        <div>
+          <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
+        </div>
         <material-card color="green" title="Proforma Invoice List" text="Click row to see details.">
           <v-data-table align="left" :headers="headers" :items="konten" hide-actions>
             <template slot="headerCell" slot-scope="{ header }">
@@ -30,6 +33,18 @@ import Axios from "axios";
 
 export default {
   data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "Proforma Invoice",
+        disabled: true,
+        href: "/pi"
+      }
+    ],
     role: "",
     headers: [
       {
@@ -71,3 +86,4 @@ export default {
   }
 };
 </script>
+
