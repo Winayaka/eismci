@@ -63,7 +63,7 @@ public class PurchaseOrderModel implements Serializable {
      * Foreign Key
      * ========================================================
     */
-
+    
     @OneToMany(mappedBy = "purchaseOrder",fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<POProductDetailModel> purchaseOrder;

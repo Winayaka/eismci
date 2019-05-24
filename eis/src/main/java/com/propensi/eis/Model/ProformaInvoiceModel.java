@@ -87,29 +87,23 @@ public class ProformaInvoiceModel implements Serializable {
     private LocalDate completeDate;
 
     /**
-     * ======================================================== Foreign key
+     * ======================================================== Foreign Key
      * ========================================================
      */
 
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "payment_method_id", referencedColumnName = "id", nullable
-    // = false)
-    // @OnDelete(action = OnDeleteAction.NO_ACTION)
-    // private PaymentMethodModel paymentMethod;
+    @OneToMany(mappedBy = "proformaInvoice", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<PIProductDetailModel> detailProduct;
 
     @OneToMany(mappedBy = "proformaInvoice", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<PIProductDetailModel> detailProduct;
+    private List<ShippingInstructionModel> shippingInstruction;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private CustomerModel customer;
-
-    @OneToMany(mappedBy = "proformaInvoice", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<ShippingInstructionModel> shippingInstruction;
 
     /**
      * ======================================================== Setter Getter
