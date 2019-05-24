@@ -374,7 +374,7 @@ export default {
       console.log("belon login");
     }
     //rolenya sokap?
-    if (!this.$session.get("role") === "Manager") {
+    if (this.$session.get("role") !== "Manager") {
       alert(this.$session.get("role"));
       this.$router.push("/");
       console.log("bukan staff");

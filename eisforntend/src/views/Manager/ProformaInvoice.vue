@@ -70,6 +70,20 @@ export default {
     ],
     konten: []
   }),
+  beforeCreate: function() {
+    console.log("before create");
+    console.log(this.$session.get("role"));
+    if (!this.$session.exists()) {
+      this.$router.push("/login");
+      console.log("belon login");
+    }
+    //rolenya sokap?
+    if (this.$session.get("role") !== "Manager") {
+      console.log("bkn manager");
+      this.$router.push("/");
+      console.log("bukan staff");
+    }
+  },
   mounted() {
     var self = this;
     Axios.get("http://localhost:8099/api/pi/all")

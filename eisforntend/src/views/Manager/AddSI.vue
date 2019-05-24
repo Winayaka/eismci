@@ -463,19 +463,19 @@ export default {
       if (SI.staff == "" || !/^[0-9]\d*$/.test(SI.staff)) {
         ok = false;
       }
-      if ((SI.vesselName = "")) {
+      if (SI.vesselName == "") {
         ok = false;
       }
-      if ((SI.liner = "")) {
+      if (SI.liner == "") {
         ok = false;
       }
-      if ((SI.poL = "")) {
+      if (SI.poL == "") {
         ok = false;
       }
-      if ((SI.poD = "")) {
+      if (SI.poD == "") {
         ok = false;
       }
-      if ((SI.finalDestination = "")) {
+      if (SI.finalDestination == "") {
         ok = false;
       }
       var i;

@@ -282,6 +282,20 @@ export default {
     ],
     pi: ""
   }),
+  beforeCreate: function() {
+    console.log("before create");
+    console.log(this.$session.get("role"));
+    if (!this.$session.exists()) {
+      this.$router.push("/login");
+      console.log("belon login");
+    }
+    //rolenya sokap?
+    if (this.$session.get("role") !== "Manager") {
+      console.log("bkn manager");
+      this.$router.push("/");
+      console.log("bukan staff");
+    }
+  },
   mounted() {
     var idPI = this.$route.query.id;
     this.pi = idPI;
@@ -295,7 +309,6 @@ export default {
       .then(response => {
         this.SI = response.data.result;
       })
-      .then(console.log(this.response.message))
       .catch(function error(params) {});
   },
   methods: {

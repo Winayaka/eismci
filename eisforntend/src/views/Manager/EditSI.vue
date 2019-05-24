@@ -106,16 +106,21 @@
                   v-model="konten.closeTime"
                 />
               </v-layout>
-              <v-text-field label="Liner" :value="konten.liner" v-model="konten.liner"/>
+              <v-text-field
+                label="Liner"
+                :value="konten.liner"
+                v-model="konten.liner"
+                :rules="[rules.required, rules.max50]"
+                counter
+                maxlength="50"
+              />
               <v-select
                 label="Staff in Charge"
                 :items="staff"
                 item-text="name"
                 item-value="staffId"
                 v-model="konten.staff"
-                :rules="[rules.required, rules.max50]"
-                counter
-                maxlength="50"
+                :rules="rules.required"
               />
               <v-text-field label="Invoice" :value="konten.invoiceNum" v-model="konten.invoiceNum"/>
               <v-text-field
@@ -219,15 +224,11 @@ Form Shipment Product
       <v-dialog v-model="successDialog" persistent width="400">
         <v-card>
           <v-card-title class="headline grey lighten-2" primary-title>Congratulations!</v-card-title>
-          <v-card-text>You have successfull add Shipping Instruction.</v-card-text>
+          <v-card-text>You have successfull Edit Shipping Instruction.</v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
             <v-layout align-center justify-end fill-height>
-              <v-btn
-                color="blue darken-1"
-                flat
-                @click="$router.push({ path: '/manager/pi/detail', query: {id : konten.piid}})"
-              >Back</v-btn>
+              <v-btn color="blue darken-1" flat @click="$router.go(-1)">Back</v-btn>
             </v-layout>
           </v-card-actions>
         </v-card>
@@ -293,8 +294,8 @@ export default {
       liner: "",
       eta: "",
       etd: "",
-      poD: "",
-      poL: "",
+      pod: "",
+      pol: "",
       shipmentStatus: "",
       finalDestination: "",
       openTime: "",
@@ -318,8 +319,8 @@ export default {
       liner: "",
       eta: "",
       etd: "",
-      poD: "",
-      poL: "",
+      pod: "",
+      pol: "",
       shipmentStatus: "",
       finalDestination: "",
       openTime: "",
@@ -368,11 +369,11 @@ export default {
   mounted() {
     var idSi = this.$route.query.id;
     this.bredcrumbs[this.bredcrumbs.length - 2].href =
-      " /manager/si/edit?id=" + idSi;
+      " /manager/si/detail?id=" + idSi;
 
     Axios.get("http://localhost:8099/api/si?id=" + idSi)
       .then(response => {
-        console.log(response.data.result.piid);
+        console.log(response.data.result);
         this.konten = response.data.result;
         this.oldSI = response.data.result;
         this.bredcrumbs[this.bredcrumbs.length - 3].href =
@@ -504,19 +505,20 @@ export default {
       if (SI.staff == "" || !/^[0-9]\d*$/.test(SI.staff)) {
         ok = false;
       }
-      if ((SI.vesselName = "")) {
+      if (SI.vesselName == "") {
         ok = false;
       }
-      if ((SI.liner = "")) {
+      if (SI.liner == "") {
+        console.log("liner kosong");
         ok = false;
       }
-      if ((SI.poL = "")) {
+      if (SI.poL == "") {
         ok = false;
       }
-      if ((SI.poD = "")) {
+      if (SI.poD == "") {
         ok = false;
       }
-      if ((SI.finalDestination = "")) {
+      if (SI.finalDestination == "") {
         ok = false;
       }
       var i;
@@ -526,6 +528,7 @@ export default {
         }
       }
       if (ok) {
+        console.log(SI);
         Axios.post(url, {
           proformaInvoiceId: SI.piid,
           number: SI.siNum,
