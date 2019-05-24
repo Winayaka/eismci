@@ -1,4 +1,4 @@
-<template>
+<template v-if="this.$session.exists()">
   <v-toolbar id="core-toolbar" flat prominent style="background: #eee;">
     <div class="v-toolbar-title">
       <v-toolbar-title class="tertiary--text font-weight-light">
@@ -8,9 +8,7 @@
       </v-toolbar-title>
     </div>
     <v-spacer/>
-      <v-btn  class="default v-btn--simple" dark icon @click="logout()">
-        logout
-      </v-btn>
+    <v-btn class="default v-btn--simple" dark icon @click="logout()">logout</v-btn>
   </v-toolbar>
 </template>
 
@@ -62,8 +60,8 @@ export default {
         this.responsiveInput = true;
       }
     },
-    logout(){
-      this.$session.destroy()
+    logout() {
+      this.$session.destroy();
       this.$router.push("/");
     }
   }

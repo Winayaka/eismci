@@ -49,18 +49,16 @@ export default {
   }),
   beforeCreate: function() {
     if (!this.$session.exists()) {
-      this.$router.push("/login");
+      this.$router.push("/");
       console.log("belum login");
-    }
-    //rolenya sokap?
-    if (!this.$session.get("role") === "staffExport") {
-      this.$router.push("/");
-      console.log("bukan staff");
-    }
-
-    if (!this.$session.get("role") === "Manager") {
-      this.$router.push("/");
-      console.log("bukan staff");
+    } else if (this.$session.get("role") !== "Manager") {
+      if (this.$session.get("role") === "Customer") {
+        this.$router.push({ path: "/customer/error" });
+      } else if (this.$session.get("role") === "StaffAdministrative") {
+        this.$router.push({ path: "/staffadministrative/error" });
+      } else if (this.$session.get("role") === "Staff Export") {
+        this.$router.push({ path: "/staffexport/error" });
+      }
     }
   },
 

@@ -51,6 +51,7 @@
                 <v-card-text>
                   <div id="tab-2">
                     <v-layout align-center justify-space-between fill-height>
+                      <v-spacer></v-spacer>
                       <v-flex xs6 class="text-xs-right">
                         <v-btn
                           :disabled="normalPrioritySI.length == 0"

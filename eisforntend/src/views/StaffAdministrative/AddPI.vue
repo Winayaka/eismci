@@ -383,29 +383,20 @@ export default {
     }
   },
 
-  beforeCreate: function() {
+  beforeCreate() {
     if (!this.$session.exists()) {
       this.$router.push("/");
       console.log("belum login");
+    } else if (this.$session.get("role") !== "StaffAdministrative") {
+      if (this.$session.get("role") === "Customer") {
+        this.$router.push({ path: "/customer/error" });
+      } else if (this.$session.get("role") === "Manager") {
+        this.$router.push({ path: "/manager/error" });
+      } else if (this.$session.get("role") === "Staff Export") {
+        this.$router.push({ path: "/staffexport/error" });
+      }
     }
-
-    if (!this.$session.get("role") === "Manager") {
-      alert(this.$session.get("role"));
-      this.$router.push("/");
-      console.log("bukan staff");
-    }
-
-    if (!this.$session.get("role") === "StaffAdministrative") {
-      alert(this.$session.get("role"));
-      this.$router.push("/");
-      console.log("bukan staff");
-    }
-
-    if (!this.$session.get("role") === "Customer") {
-      alert(this.$session.get("role"));
-      this.$router.push("/");
-      console.log("bukan staff");
-    }
+    console.log("Bukan Staff Admin");
   },
 
   mounted() {

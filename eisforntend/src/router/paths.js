@@ -8,6 +8,30 @@ export default [
     view: "Login",
     role: "No"
   },
+  {
+    path: "/manager/error",
+    name: "No Authorization",
+    view: "Manager/NoAuth",
+    role: "Manager"
+  },
+  {
+    path: "/staffadministrative/error",
+    name: "No Authorization",
+    view: "StaffAdministrative/NoAuth",
+    role: "StaffAdministrative"
+  },
+  {
+    path: "/staffexport/error",
+    name: "No Authorization",
+    view: "StaffExport/NoAuth",
+    role: "StaffExport"
+  },
+  {
+    path: "/customer/error",
+    name: "No Authorization",
+    view: "Customer/NoAuth",
+    role: "Customer"
+  },
 
   // ==================================
   // ROLE STAFF EXPORT

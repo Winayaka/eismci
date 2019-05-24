@@ -45,7 +45,7 @@ import { mapMutations, mapState } from "vuex";
 
 export default {
   data: () => ({
-    logo: "./img/vuetifylogo.png",
+    logo: "./img/MCI.png",
     links: [
       {
         to: "/staffadministrative/pi",
