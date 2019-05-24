@@ -2,6 +2,9 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex md12>
+        <div>
+          <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
+        </div>
         <material-card
           color="green"
           title="Edit Shipping Instruction"
@@ -41,13 +44,17 @@
                 label="Port of Discharge"
                 :value="konten.pod"
                 v-model="konten.pod"
-                :rules="rules.required"
+                :rules="[rules.required, rules.max50]"
+                counter
+                maxlength="50"
               />
               <v-text-field
                 label="Port of Loading"
                 :value="konten.pol"
                 v-model="konten.pol"
-                :rules="rules.required"
+                :rules="[rules.required, rules.max50]"
+                counter
+                maxlength="50"
               />
               <v-select
                 label="Shipment Status"
@@ -67,7 +74,9 @@
                 label="Final Destination"
                 :value="konten.finalDestination"
                 v-model="konten.finalDestination"
-                :rules="rules.required"
+                :rules="[rules.required, rules.max50]"
+                counter
+                maxlength="50"
               />
               <v-layout>
                 <v-text-field
@@ -97,7 +106,14 @@
                   v-model="konten.closeTime"
                 />
               </v-layout>
-              <v-text-field label="Liner" :value="konten.liner" v-model="konten.liner"/>
+              <v-text-field
+                label="Liner"
+                :value="konten.liner"
+                v-model="konten.liner"
+                :rules="[rules.required, rules.max50]"
+                counter
+                maxlength="50"
+              />
               <v-select
                 label="Staff in Charge"
                 :items="staff"
@@ -111,12 +127,15 @@
                 label="Vessel"
                 :value="konten.vesselName"
                 v-model="konten.vesselName"
-                :rules="rules.required"
+                :rules="[rules.required, rules.max50]"
+                counter
+                maxlength="50"
               />
               <v-text-field
                 label="Connecting Vessel"
                 :value="konten.connectingVessel"
-                v-model="konten.connectingVessel"
+                counter
+                maxlength="50"
               />
               <!--  
 ================================================================================================
@@ -124,13 +143,14 @@ Form Shipment Product
 ================================================================================================
               -->
               <div>
-                <v-toolbar flat color="white">
+                1
+                <v-toolbar flat color="white" align-left justify-space-between row fill-height>
                   <v-toolbar-title>Shipping Product</v-toolbar-title>
                   <v-divider class="mx-2" inset vertical></v-divider>
                   <v-spacer></v-spacer>
                   <v-dialog v-model="dialog" max-width="500px">
                     <template v-slot:activator="{ on }">
-                      <v-btn color="primary" dark class="mb-2" v-on="on">Add New</v-btn>
+                      <v-btn color="primary" dark class="mb-2" v-on="on" @click="f">Add New</v-btn>
                     </template>
                     <v-card>
                       <v-card-title>
@@ -144,10 +164,12 @@ Form Shipment Product
                               <v-select
                                 label="Produk"
                                 :items="pipotrans"
-                                item-text="pipoid"
+                                item-text="poNum"
+                                item-value="pipoid"
                                 :value="editedItem.pipoid"
                                 v-model="editedItem.pipoid"
                                 :rules="rules.required"
+                                @change="assign"
                               />
                             </v-flex>
 
@@ -173,10 +195,9 @@ Form Shipment Product
                 </v-toolbar>
                 <v-data-table :headers="siProduct" :items="konten.produkDetail" class="elevation-1">
                   <template v-slot:items="props">
-                    <td class="text-xs-center">{{ props.item.productName }}</td>
-                    <td class="text-xs-center">{{ props.item.ponum }}</td>
-                    <td class="text-xs-center">{{ props.item.quantity }}</td>
-                    <td class="text-xs-center">{{ props.item.pipoid }}</td>
+                    <td class="text-xs-left">{{ props.item.productName }}</td>
+                    <td class="text-xs-left">{{ props.item.ponum }}</td>
+                    <td class="text-xs-left">{{ props.item.quantity }}</td>
                     <td class="justify-center layout px-0">
                       <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
                       <v-icon small @click="deleteItem(props.item)">delete</v-icon>
@@ -189,9 +210,29 @@ Form Shipment Product
               </div>
             </v-form>
           </v-container>
-          <v-btn color="blue" dark class="mb-2" @click="submitSI(konten)">Save</v-btn>
+          <v-layout>
+            <v-flex xs6 class="text-xs-left">
+              <v-btn color="warning" round @click="cancel()">Cancel</v-btn>
+            </v-flex>
+            <v-spacer></v-spacer>
+            <v-flex xs6 class="text-xs-right">
+              <v-btn color="green" round @click="submitSI(konten)">save</v-btn>
+            </v-flex>
+          </v-layout>>
         </material-card>
       </v-flex>
+      <v-dialog v-model="successDialog" persistent width="400">
+        <v-card>
+          <v-card-title class="headline grey lighten-2" primary-title>Congratulations!</v-card-title>
+          <v-card-text>You have successfull Edit Shipping Instruction.</v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-layout align-center justify-end fill-height>
+              <v-btn color="blue darken-1" flat @click="$router.go(-1)">Back</v-btn>
+            </v-layout>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-layout>
   </v-container>
 </template>
@@ -200,6 +241,33 @@ Form Shipment Product
 import Axios from "axios";
 export default {
   data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "Proforma Invoice",
+        disabled: false,
+        href: "/manager/pi"
+      },
+      {
+        text: "Proforma Invoice Detail",
+        disabled: false,
+        href: ""
+      },
+      {
+        text: "Shipping Instruction Detail",
+        disabled: false,
+        href: ""
+      },
+      {
+        text: "Edit Shipping Instruction",
+        disabled: true
+      }
+    ],
+    successDialog: false,
     dialog: false,
     editedIndex: -1,
     siProduct: [
@@ -217,11 +285,6 @@ export default {
         sortable: false,
         text: "Quantity",
         value: "quantity"
-      },
-      {
-        sortable: false,
-        text: "Transaction Id",
-        value: "Transaction Id"
       }
     ],
     konten: {
@@ -231,8 +294,8 @@ export default {
       liner: "",
       eta: "",
       etd: "",
-      poD: "",
-      poL: "",
+      pod: "",
+      pol: "",
       shipmentStatus: "",
       finalDestination: "",
       openTime: "",
@@ -256,8 +319,8 @@ export default {
       liner: "",
       eta: "",
       etd: "",
-      poD: "",
-      poL: "",
+      pod: "",
+      pol: "",
       shipmentStatus: "",
       finalDestination: "",
       openTime: "",
@@ -285,7 +348,9 @@ export default {
     },
     pipotrans: [],
     rules: {
-      required: [v => !!v || "The input is required"]
+      required: [v => !!v || "The input is required"],
+      max50: [v => v.length <= 50 || "Input must be less than 50 characters"],
+      max255: [v => v.length <= 50 || "Input must be less than 255 characters"]
     }
   }),
 
@@ -299,21 +364,21 @@ export default {
       this.$router.push("/");
       console.log("bukan staff");
     }
-
-    if (!this.$session.get("role") === "StaffExport") {
-      this.$router.push("/");
-      console.log("bukan staff");
-    }
   },
 
   mounted() {
     var idSi = this.$route.query.id;
+    this.bredcrumbs[this.bredcrumbs.length - 2].href =
+      " /manager/si/detail?id=" + idSi;
+
     Axios.get("http://localhost:8099/api/si?id=" + idSi)
       .then(response => {
+        console.log(response.data.result);
         this.konten = response.data.result;
         this.oldSI = response.data.result;
+        this.bredcrumbs[this.bredcrumbs.length - 3].href =
+          "/manager/pi/detail?id=" + response.data.result.piid;
       })
-      .then(console.log(this.response))
       .catch(function error(params) {});
 
     Axios.get("http://localhost:8099/api/getAllStaff")
@@ -341,6 +406,12 @@ export default {
   },
 
   methods: {
+    cancel() {
+      var r = confirm("are you sure want to cancel?");
+      if (r) {
+        this.$router.go(-1);
+      }
+    },
     initialize() {
       this.konten.produkDetail = this.oldSI.produkDetail;
     },
@@ -389,14 +460,29 @@ export default {
       //this.editedItem.pipoid = temp.pipoid
     },
 
-    productFilterTrans(pipo) {
-      alert("mashook");
-      //console.log(pipo)
-      return this.pipotrans.filter(e => {
-        return;
-        e.productName.indexOf(pipo.productName > -1);
-      });
+    f() {
+      var i;
       console.log(this.pipotrans);
+      for (i = 0; i < this.pipotrans.length; i++) {
+        //alert("a");
+        var a = this.pipotrans[i].ponum + " - " + this.pipotrans[i].productName;
+        this.pipotrans[i].poNum = a;
+        //alert(a)
+      }
+    },
+
+    assign(item) {
+      var temp;
+      var i;
+      console.log(item);
+
+      for (i = 0; i < this.pipotrans.length; i++) {
+        if (this.pipotrans[i].pipoid == item) temp = this.pipotrans[i];
+      }
+
+      this.editedItem.ponum = temp.poNum.split(" - ")[0];
+      this.editedItem.productName = temp.poNum.split(" - ")[1];
+      console.log(this.editedItem);
     },
 
     reInitialize() {
@@ -412,42 +498,76 @@ export default {
       console.log(SI.invoiceNum);
       var url = "http://localhost:8099/api/si/update?id=" + SI.shipmentId;
       console.log(url);
-      Axios.post(url, {
-        proformaInvoiceId: SI.piid,
-        number: SI.siNum,
-        purchaseOrderId: SI.poid,
-        staff: SI.staff,
-        vesselName: SI.vesselName,
-        connectingVessel: SI.connectingVessel,
-        liner: SI.liner,
-        openDate: SI.openDate,
-        openTime: SI.openTime,
-        closeDate: SI.closeDate,
-        closeTime: SI.closeTime,
-        poL: SI.pol,
-        poD: SI.pod,
-        eTA: SI.eta,
-        etdep: SI.etd,
-        finalDestination: SI.finalDestination,
-        status: SI.shipmentStatus,
-        paymentStatus: SI.paymentStatus,
-        product: SI.produkDetail,
-        invoice: SI.invoiceNum
-      })
-        .then(console.log(this.product))
-        .then(response => {
-          if (response.data.status == 200) {
-            alert("Add  Success");
-            console.log(response.data);
-            this.$router.go(-1);
-          } else {
-            alert(response.data.status);
-            console.log(response.data);
-          }
+      var ok = true;
+      if (SI.number == "") {
+        ok = false;
+      }
+      if (SI.staff == "" || !/^[0-9]\d*$/.test(SI.staff)) {
+        ok = false;
+      }
+      if (SI.vesselName == "") {
+        ok = false;
+      }
+      if (SI.liner == "") {
+        console.log("liner kosong");
+        ok = false;
+      }
+      if (SI.poL == "") {
+        ok = false;
+      }
+      if (SI.poD == "") {
+        ok = false;
+      }
+      if (SI.finalDestination == "") {
+        ok = false;
+      }
+      var i;
+      for (i = 0; i < SI.produkDetail.length; i++) {
+        if (SI.produkDetail[i].quantity == "") {
+          ok = false;
+        }
+      }
+      if (ok) {
+        console.log(SI);
+        Axios.post(url, {
+          proformaInvoiceId: SI.piid,
+          number: SI.siNum,
+          purchaseOrderId: SI.poid,
+          staff: SI.staff,
+          vesselName: SI.vesselName,
+          connectingVessel: SI.connectingVessel,
+          liner: SI.liner,
+          openDate: SI.openDate,
+          openTime: SI.openTime,
+          closeDate: SI.closeDate,
+          closeTime: SI.closeTime,
+          poL: SI.pol,
+          poD: SI.pod,
+          eTA: SI.eta,
+          etdep: SI.etd,
+          finalDestination: SI.finalDestination,
+          status: SI.shipmentStatus,
+          paymentStatus: SI.paymentStatus,
+          product: SI.produkDetail,
+          invoice: SI.invoiceNum
         })
-        .catch(function(error) {
-          console.log(error);
-        });
+          .then(console.log(this.product))
+          .then(response => {
+            if (response.data.status == 200) {
+              this.successDialog = true;
+              console.log(response.data);
+              // this.$router.go(-1);
+            } else {
+              alert(response.data.status);
+              console.log(response.data);
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else {
+        alert("Input data is wrong");
+      }
     }
   }
 };

@@ -206,12 +206,12 @@ export default {
       {
         text: "Dashboard",
         disabled: false,
-        href: "/dashboard"
+        href: "/customer"
       },
       {
         text: "Proforma Invoice",
         disabled: false,
-        href: "/pi"
+        href: "/customer/pi"
       },
       {
         text: "Proforma Invoice Detail",

@@ -83,8 +83,7 @@ export default {
   }),
   mounted() {
     //var idStaff = this.$route.query.id;
-    //var idStaff = this.$session.get("id_role")
-    var idStaff = 2;
+    var idStaff = this.$session.get("id_role")
     Axios.get("http://localhost:8099/api/get/si/assigned?StaffId=" + idStaff)
       .then(response => {
         this.konten = response.data.result;

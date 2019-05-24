@@ -2,6 +2,7 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex md12>
+        <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
         <material-card color="green" title="Purchase Order Details">
           <v-card-text class="text-xs-left">
             <v-container>
@@ -80,6 +81,22 @@ export default {
     }
   },
   data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "Purchase Order",
+        disabled: false,
+        href: "/manager/pi"
+      },
+      {
+        text: "Purchase Order Detail",
+        disabled: true
+      }
+    ],
     beforeCreate: function() {
       if (!this.$session.exists()) {
         this.$router.push("/");

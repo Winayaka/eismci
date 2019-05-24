@@ -31,7 +31,7 @@ export default [
     path: "/staffexport/document/add",
     view: "StaffExport/AddDocument",
     props: true,
-    role: "StafExport"
+    role: "StaffExport"
   },
   // ====================
   // Proforma Invoice
@@ -69,7 +69,7 @@ export default [
   // ====================
   {
     path: "/customer/document/detail",
-    view: "documentDetail",
+    view: "Customer/DocumentDetail",
     props: true,
     role: "Customer"
   },
@@ -341,5 +341,5 @@ export default [
     name: "PI-PO",
     view: "Manager/PIPOspecial",
     role: "Manager"
-  },
+  }
 ];

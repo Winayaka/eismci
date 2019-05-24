@@ -2,30 +2,8 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex md12>
+        <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
         <material-card color="green" title="Shipping Instruction Details">
-          <v-layout>
-            <v-flex xs12 md6>
-              <tr>
-                <td>
-                  <b>
-                    <p>Provorma Invoice No.</p>
-                  </b>
-                </td>
-                <td>: {{ konten.piNum }}</td>
-              </tr>
-            </v-flex>
-            <v-flex xs12 md6>
-              <tr>
-                <td>
-                  <b>
-                    <p>Shipping Instruction</p>
-                  </b>
-                </td>
-                <td>: {{ konten.siNum }}</td>
-              </tr>
-            </v-flex>
-          </v-layout>
-
           <v-layout>
             <v-flex xs12 md6>
               <tr>
@@ -258,6 +236,27 @@
 import Axios from "axios";
 export default {
   data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/customer"
+      },
+      {
+        text: "Proforma Invoice",
+        disabled: false,
+        href: "/customer/pi"
+      },
+      {
+        text: "Proforma Invoice Detail",
+        disabled: false,
+        href: ""
+      },
+      {
+        text: "Shipping Instruction Detail",
+        disabled: false
+      }
+    ],
     headers: [
       {
         sortable: false,
@@ -345,12 +344,7 @@ export default {
       console.log("belon login");
     }
     //rolenya sokap?
-    if (!this.$session.get("role") === "Manager") {
-      alert(this.$session.get("role"));
-      this.$router.push("/");
-      console.log("bukan staff");
-    }
-    if (!this.$session.get("role") === "StafExport") {
+    if (!this.$session.get("role") === "Customer") {
       alert(this.$session.get("role"));
       this.$router.push("/");
       console.log("bukan staff");
@@ -361,6 +355,8 @@ export default {
     Axios.get("http://localhost:8099/api/si/?id=" + idSI)
       .then(response => {
         this.konten = response.data.result;
+        this.bredcrumbs[this.bredcrumbs.length - 2].href =
+          "/customer/pi/detail?id=" + response.data.result.piid;
       })
       .then(console.log(this.response))
       .catch(function error(params) {});

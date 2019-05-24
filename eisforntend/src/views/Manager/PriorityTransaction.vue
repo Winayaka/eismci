@@ -7,6 +7,7 @@
         </template>
       </v-breadcrumbs>-->
       <v-flex>
+        <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
         <material-card color="green" title="Transaction Priority">
           <v-tabs centered color="transparent" class="dark--text" icons-and-text grow>
             <v-tabs-slider color="green"></v-tabs-slider>
@@ -165,6 +166,22 @@ export default {
     active: null,
     text:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "Report",
+        disabled: false,
+        href: "/manager/report"
+      },
+      {
+        text: "Priority Transaction",
+        disabled: true
+      }
+    ],
     items: [
       {
         text: "Dashboard",

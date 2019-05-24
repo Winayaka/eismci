@@ -105,6 +105,7 @@ export default {
   methods: {
     login: function(loginForm) {
       var self = this;
+      console.log(loginForm)
       Axios.post("http://localhost:8099/api/login", {
         username: loginForm.username,
         password: loginForm.password
