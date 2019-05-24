@@ -2,6 +2,7 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex md12>
+        <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
         <material-card color="green" title="Customer List" text="Click row to see details.">
           <v-data-table align="left" :headers="headers" :items="konten">
             <template slot="headerCell" slot-scope="{ header }">
@@ -29,6 +30,18 @@ import Axios from "axios";
 
 export default {
   data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "Customer",
+        disabled: true,
+        href: "/manager/customer"
+      }
+    ],
     headers: [
       {
         text: "Name",

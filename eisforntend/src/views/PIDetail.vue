@@ -302,18 +302,6 @@ export default {
       this.$router.push("/");
       console.log("bukan staff");
     }
-
-    if (!this.$session.get("role") === "StaffAdministrative") {
-      alert(this.$session.get("role"));
-      this.$router.push("/");
-      console.log("bukan staff");
-    }
-
-    if (!this.$session.get("role") === "StafExport") {
-      alert(this.$session.get("role"));
-      this.$router.push("/");
-      console.log("bukan staff");
-    }
   },
   mounted() {
     var idPI = this.$route.query.id;
@@ -327,7 +315,6 @@ export default {
       .then(response => {
         this.SI = response.data.result;
       })
-      .then(console.log(this.response.message))
       .catch(function error(params) {});
   },
   methods: {

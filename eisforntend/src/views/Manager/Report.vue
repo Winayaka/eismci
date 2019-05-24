@@ -2,6 +2,7 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout class="container" wrap>
       <v-flex xs12 md6>
+        <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
         <material-card color="green" title="Transaction Recapitulation">
           <v-card>
             <v-img
@@ -63,7 +64,20 @@ export default {
       default: "1"
     }
   },
-  data: () => ({}),
+  data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "Report",
+        disabled: true,
+        href: "/manager/report"
+      }
+    ]
+  }),
   beforeCreate: function() {
     if (!this.$session.exists()) {
       this.$router.push("/");

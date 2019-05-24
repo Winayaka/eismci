@@ -2,6 +2,7 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex md12>
+        <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
         <material-card color="green" title="Staff List" text="Click staff to view detail">
           <div>
             <v-btn color="success" round class="font-weight-light" @click="addStaff()">Add Staff</v-btn>
@@ -37,6 +38,18 @@ import Axios from "axios";
 
 export default {
   data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "Staff",
+        disabled: true,
+        href: "/manager/staff"
+      }
+    ],
     headers: [
       {
         sortable: false,

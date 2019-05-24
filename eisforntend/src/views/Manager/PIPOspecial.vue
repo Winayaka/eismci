@@ -2,6 +2,7 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex md12>
+        <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
         <material-card color="green" title="List PI-PO">
           <div>
             <v-data-table :headers="headers" :items="konten" class="elevation-1">
@@ -135,6 +136,18 @@
 import Axios from "axios";
 export default {
   data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "PI-PO",
+        disabled: true,
+        href: "/manager/pi-po"
+      }
+    ],
     konten: [],
     headers: [
       {

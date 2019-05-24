@@ -1,5 +1,6 @@
 <template>
   <v-container grid-list-md text-xs-center>
+    <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
     <v-layout row wrap>
       <v-flex xs12 md12>
         <span class="display-3">Report - Transaction Recapitulation - {{displayPeriod}}</span>
@@ -71,6 +72,22 @@ import Axios from "axios";
 
 export default {
   data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/Manager"
+      },
+      {
+        text: "Report",
+        disabled: false,
+        href: "/manager/report"
+      },
+      {
+        text: "Transaction Recapitulation",
+        disabled: true
+      }
+    ],
     input: {
       period: "weekly",
       date: ""

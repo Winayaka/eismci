@@ -2,6 +2,7 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex md12>
+        <v-breadcrumbs :items="bredcrumbs" divider=">"></v-breadcrumbs>
         <material-card color="green" title="Proforma Invoice List" text="Click row to see details.">
           <!-- <div>
             <v-btn
@@ -38,6 +39,18 @@ import Axios from "axios";
 
 export default {
   data: () => ({
+    bredcrumbs: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/customer"
+      },
+      {
+        text: "Proforma Invoice",
+        disabled: true,
+        href: "/customer/pi"
+      }
+    ],
     role: "",
     headers: [
       {
@@ -78,18 +91,6 @@ export default {
     if (!this.$session.exists()) {
       this.$router.push("/");
       console.log("belum login");
-    }
-
-    if (!this.$session.get("role") === "Manager") {
-      alert(this.$session.get("role"));
-      this.$router.push("/");
-      console.log("bukan staff");
-    }
-
-    if (!this.$session.get("role") === "StaffAdministrative") {
-      alert(this.$session.get("role"));
-      this.$router.push("/");
-      console.log("bukan staff");
     }
 
     if (!this.$session.get("role") === "Customer") {
