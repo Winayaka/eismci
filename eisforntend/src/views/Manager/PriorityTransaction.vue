@@ -7,6 +7,87 @@
         </template>
       </v-breadcrumbs>-->
       <v-flex>
+        <material-card color="green" title="Transaction Priority">
+          <v-tabs centered color="transparent" class="dark--text" icons-and-text grow>
+            <v-tabs-slider color="green"></v-tabs-slider>
+
+            <v-tab href="#tab-1">High Transaction</v-tab>
+
+            <v-tab href="#tab-2">Normal Transaction</v-tab>
+
+            <v-tab-item :value="'tab-1'">
+              <v-card flat>
+                <v-card-text>
+                  <div id="tab-1">
+                    <v-data-table :headers="headers" :items="highPrioritySI" class="elevation-1">
+                      <template v-slot:items="props">
+                        <td>{{ props.item.number }}</td>
+                        <td>{{ props.item.createDate }}</td>
+                        <td>{{ props.item.openDate }}</td>
+                        <td>{{ props.item.closeDate }}</td>
+                        <td>{{ props.item.finalDestination }}</td>
+                        <td>{{ props.item.shipmentStatus }}</td>
+                        <td>
+                          <v-btn
+                            disable
+                            right
+                            depressed
+                            small
+                            round
+                            color="red"
+                            text-color="white"
+                          >{{ props.item.shipmentPriority }}</v-btn>
+                        </td>
+                      </template>
+                    </v-data-table>
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+
+            <v-tab-item :value="'tab-2'">
+              <v-card flat>
+                <v-card-text>
+                  <div id="tab-2">
+                    <v-layout align-center justify-space-between fill-height>
+                      <v-flex xs6 class="text-xs-right">
+                        <v-btn
+                          :disabled="normalPrioritySI.length == 0"
+                          to="/manager/report/priority/add"
+                          color="green"
+                        >+Set Priority Transaction</v-btn>
+                      </v-flex>
+                    </v-layout>
+                    <v-data-table :headers="headers" :items="normalPrioritySI" class="elevation-1">
+                      <template v-slot:items="props">
+                        <td>{{ props.item.number }}</td>
+                        <td>{{ props.item.createDate }}</td>
+                        <td>{{ props.item.openDate }}</td>
+                        <td>{{ props.item.closeDate }}</td>
+                        <td>{{ props.item.finalDestination }}</td>
+                        <td>{{ props.item.shipmentStatus }}</td>
+                        <td>
+                          <v-btn
+                            disable
+                            right
+                            depressed
+                            small
+                            round
+                            color="green"
+                            text-color="white"
+                          >{{ props.item.shipmentPriority }}</v-btn>
+                        </td>
+                      </template>
+                    </v-data-table>
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+          </v-tabs>
+        </material-card>
+      </v-flex>
+
+      <!-- <v-flex>
         <material-card color="green" title="Priotity Shipping Instructions">
           <br>
           <v-layout>
@@ -70,7 +151,7 @@
             </template>
           </v-data-table>
         </material-card>
-      </v-flex>
+      </v-flex>-->
     </v-layout>
   </v-container>
 </template>
@@ -81,6 +162,9 @@ import Axios from "axios";
 
 export default {
   data: () => ({
+    active: null,
+    text:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     items: [
       {
         text: "Dashboard",

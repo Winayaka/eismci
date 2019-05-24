@@ -383,6 +383,31 @@ export default {
     }
   },
 
+  beforeCreate: function() {
+    if (!this.$session.exists()) {
+      this.$router.push("/");
+      console.log("belum login");
+    }
+
+    if (!this.$session.get("role") === "Manager") {
+      alert(this.$session.get("role"));
+      this.$router.push("/");
+      console.log("bukan staff");
+    }
+
+    if (!this.$session.get("role") === "StaffAdministrative") {
+      alert(this.$session.get("role"));
+      this.$router.push("/");
+      console.log("bukan staff");
+    }
+
+    if (!this.$session.get("role") === "Customer") {
+      alert(this.$session.get("role"));
+      this.$router.push("/");
+      console.log("bukan staff");
+    }
+  },
+
   mounted() {
     // this.$validator.localize("en", this.dictionary);
     Axios.get("http://localhost:8099/api/pi/all").then(response => {
@@ -492,3 +517,15 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.v-label {
+  font-size: 17px !important;
+  font-weight: 500 !important;
+}
+
+input {
+  // font-weight: 450 !important;
+}
+</style>
+
