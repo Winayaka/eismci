@@ -135,7 +135,7 @@ export default {
       console.log("belon login");
     }
     //rolenya sokap?
-    if (!this.$session.get("role") === "StaffExport") {
+    if (this.$session.get("role") !== "Manager") {
       this.$router.push("/");
       console.log("bukan staff");
     }
@@ -181,14 +181,30 @@ export default {
       let currdatetime = new Date();
       this.editedNotes.sendDate = currdatetime.toString();
 
-      this.submitedDoc.sender = this.editedNotes.sender;
-      this.submitedDoc.content = this.editedNotes.content;
-      this.submitedDoc.createdDate = this.editedNotes.createdDate;
-      this.submitedDoc.createdTime = this.editedNotes.createdTime;
-      this.submitedDoc.sendDate = this.editedNotes.sendDate;
-      this.submitedDoc.roleId = this.editedNotes.roleId;
+      // this.submitedDoc.sender = this.editedNotes.sender;
+      // this.submitedDoc.content = this.editedNotes.content;
+      // this.submitedDoc.createdDate = this.editedNotes.createdDate;
+      // this.submitedDoc.createdTime = this.editedNotes.createdTime;
+      // this.submitedDoc.sendDate = this.editedNotes.sendDate;
+      // this.submitedDoc.roleId = this.editedNotes.roleId;
 
-      this.notes = [...this.notes, this.editedNotes];
+      var a = {
+        sender: "",
+        content: "",
+        createdDate: "",
+        createdTime: "",
+        sendDate: "",
+        roleId: ""
+      };
+
+      a.sender = this.editedNotes.sender;
+      a.content = this.editedNotes.content;
+      a.createdDate = this.editedNotes.createdDate;
+      a.createdTime = this.editedNotes.createdTime;
+      a.sendDate = this.editedNotes.sendDate;
+      a.roleId = this.editedNotes.roleId;
+
+      this.notes = [...this.notes, a];
 
       console.log(this.docId);
       Axios.post("http://localhost:8099/api/add/note", {
