@@ -31,7 +31,7 @@ export default [
     path: "/staffexport/document/add",
     view: "StaffExport/AddDocument",
     props: true,
-    role: "StafExport"
+    role: "StaffExport"
   },
   // ====================
   // Proforma Invoice
