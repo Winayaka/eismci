@@ -415,8 +415,7 @@ export default {
       });
     },
     docDetail(a) {
-      var role = this.$session.get("role");
-      var roleUrl = role.toLowerCase();
+      console.log(a);
       this.$router.push({
         path: "/manager/document/detail",
         query: { id: a.id }

@@ -65,6 +65,10 @@
           <h5>Comment</h5>
           <hr>
           <div>
+            <div :key="index" v-for="(item, index) in submited">
+              <p>{{ item.sendDate }}</p>
+              <v-text-field :value="item.content" :label="item.sender" box readonly></v-text-field>
+            </div>
             <div :key="index" v-for="(item, index) in notes">
               <p>{{ item.sendDate }}</p>
               <v-text-field :value="item.content" :label="item.sender" box readonly></v-text-field>
@@ -81,7 +85,7 @@
               solo
               name="input-7-1"
               label="Add Comment"
-              :value="editedNotes.content"
+              :value="notes.content"
               v-model="editedNotes.content"
             ></v-textarea>
             <v-btn color="success" dark class="mb-2" @click="send(notes)">Send</v-btn>
@@ -112,7 +116,17 @@ export default {
       createdTime: "",
       sendDate: "",
       roleId: ""
-    }
+    },
+    submitedDoc: {
+      sender: "",
+      content: "",
+      createdDate: "",
+      createdTime: "",
+      sendDate: "",
+      roleId: ""
+    },
+    docId: "",
+    submited: []
   }),
 
   beforeCreate: function() {
@@ -129,6 +143,9 @@ export default {
 
   mounted() {
     var id = this.$route.query.id;
+    console.log(id);
+    this.docId = id;
+
     Axios.get("http://localhost:8099/api/document?id=" + id)
       .then(response => {
         this.document = response.data.result;
@@ -136,21 +153,21 @@ export default {
       .then(console.log(this.response))
       .catch(function error(params) {});
 
-    Axios.get("http://localhost:8099/api/note?id=" + this.docId)
+    Axios.get("http://localhost:8099/api/note?id=" + id)
       .then(response => {
-        this.notes = response.data.result;
+        this.submited = response.data.result;
       })
       .then(console.log(this.response))
       .catch(function error(params) {});
   },
   methods: {
     download(a) {
+      console.log(this.docId);
       Axios({
-        url: "http://localhost:8099/api/download?id=" + a.id, //your url
+        url: "http://localhost:8099/api/download?id=" + this.docId, //your url
         method: "GET",
         responseType: "blob" // important
       }).then(response => {
-        console.log(response);
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
         link.href = url;
@@ -164,8 +181,16 @@ export default {
       let currdatetime = new Date();
       this.editedNotes.sendDate = currdatetime.toString();
 
-      this.notes.push(this.editedNotes);
-      console.log(this.notes);
+      this.submitedDoc.sender = this.editedNotes.sender;
+      this.submitedDoc.content = this.editedNotes.content;
+      this.submitedDoc.createdDate = this.editedNotes.createdDate;
+      this.submitedDoc.createdTime = this.editedNotes.createdTime;
+      this.submitedDoc.sendDate = this.editedNotes.sendDate;
+      this.submitedDoc.roleId = this.editedNotes.roleId;
+
+      this.notes = [...this.notes, this.editedNotes];
+
+      console.log(this.docId);
       Axios.post("http://localhost:8099/api/add/note", {
         documentId: this.docId,
         doc: this.notes
