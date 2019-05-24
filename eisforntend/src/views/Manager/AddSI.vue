@@ -319,7 +319,7 @@ export default {
       console.log("belum login");
     }
     //rolenya sokap?
-    if (!this.$session.get("role") === "manager") {
+    if (this.$session.get("role") !== "manager") {
       this.$router.push("/");
       console.log("bukan staff");
     }
